@@ -1,0 +1,39 @@
+name: Deploy staging (smoke test)
+
+on:
+  push:
+    branches: [ "staging" ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Make a minimal site
+        run: |
+          mkdir -p dist
+          cat > dist/index.html << 'EOF'
+          <!doctype html>
+          <html lang="en"><head><meta charset="utf-8"/><title>str4t0tt0 — staging</title></head>
+          <body style="font-family: system-ui; padding: 2rem;">
+            <h1>Smoke test - STAGING OK</h1>
+            <p>If you see this, GitHub → AWS OIDC → S3 → CloudFront works.</p>
+          </body></html>
+          EOF
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Sync to S3 (staging)
+        run: aws s3 sync dist "s3://${{ secrets.S3_BUCKET }}/" --delete
+
+      - name: Invalidate CloudFront (optional)
+        if: ${{ secrets.CF_DISTRIBUTION_ID != '' }}
+        run: aws cloudfront create-invalidation --distribution-id "${{ secrets.CF_DISTRIBUTION_ID }}" --paths "/*"
