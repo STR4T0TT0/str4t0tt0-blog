@@ -20,7 +20,7 @@ jobs:
           <!doctype html>
           <html lang="en"><head><meta charset="utf-8"/><title>str4t0tt0 — staging</title></head>
           <body style="font-family: system-ui; padding: 2rem;">
-            <h1>Smoke test - STAGING OK</h1>
+            <h1>Staging smoke test OK</h1>
             <p>If you see this, GitHub → AWS OIDC → S3 → CloudFront works.</p>
           </body></html>
           EOF
@@ -35,9 +35,9 @@ jobs:
         run: aws s3 sync dist "s3://${{ secrets.S3_BUCKET }}/" --delete
 
       - name: Invalidate CloudFront (optional)
-  run: |
-    if [ -n "${{ secrets.CF_DISTRIBUTION_ID }}" ]; then
-      aws cloudfront create-invalidation --distribution-id "${{ secrets.CF_DISTRIBUTION_ID }}" --paths "/*"
-    else
-      echo "No CF_DISTRIBUTION_ID secret; skipping invalidation."
-    fi
+        run: |
+          if [ -n "${{ secrets.CF_DISTRIBUTION_ID }}" ]; then
+            aws cloudfront create-invalidation --distribution-id "${{ secrets.CF_DISTRIBUTION_ID }}" --paths "/*"
+          else
+            echo "No CF_DISTRIBUTION_ID secret; skipping invalidation."
+          fi
