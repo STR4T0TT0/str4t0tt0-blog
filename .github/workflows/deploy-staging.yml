@@ -1,4 +1,4 @@
-name: Deploy staging (smoke test)
+name: Deploy staging
 
 on:
   push:
@@ -12,18 +12,28 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: staging
+
     steps:
-      - name: Make a minimal site
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Injecte l'env pour le build (bandeau STAGING, etc.)
+      - name: Setup env file (staging)
         run: |
-          mkdir -p dist
-          cat > dist/index.html << 'EOF'
-          <!doctype html>
-          <html lang="en"><head><meta charset="utf-8"/><title>str4t0tt0 — staging</title></head>
-          <body style="font-family: system-ui; padding: 2rem;">
-            <h1>Staging smoke test OK</h1>
-            <p>If you see this, GitHub → AWS OIDC → S3 → CloudFront works.</p>
-          </body></html>
-          EOF
+          echo "VITE_ENV=staging" >> .env
+          echo "VITE_ENABLE_ANALYTICS=false" >> .env
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
