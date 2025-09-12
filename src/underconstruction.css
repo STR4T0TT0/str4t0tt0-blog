@@ -1,0 +1,110 @@
+/* underconstruction.css */
+
+:root {
+  --bg: #0c1116; /* fond par défaut (fallback) */
+  --brand: #b22222; /* rouge str4t0tt0 */
+}
+
+/* Conteneur plein écran avec image en fond */
+.uc {
+  min-height: 100vh;
+  background-color: var(--bg); /* fallback si WebP non supporté */
+  backdrop-filter: blur(10px); /* effet verre avec un peu de flou */
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+/* Overlay sombre pour la lisibilité (pas de balise supplémentaire) */
+.uc::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Carte centrale */
+.uc-card {
+  position: relative; /* passer au-dessus de l’overlay */
+  z-index: 1;
+  width: min(100%, 760px);
+  text-align: center;
+  color: #e6edf3;
+  background: rgba(15, 21, 27, 0.8);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.7),
+    rgba(15, 15, 15, 0.9)
+  );
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(178, 34, 34, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 0 0 1px rgba(178, 34, 34, 0.25), 0 20px 60px rgba(0, 0, 0, 0.6);
+  padding: clamp(24px, 4vw, 48px);
+}
+
+/* Image de fond floutée derrière la carte */
+.uc::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: center / cover no-repeat;
+  background-image: var(--bgImg);
+  filter: blur(2px) saturate(1.05); /* flou léger effet verre */
+  transform: scale(
+    1.02
+  ); /* truc de coyote : évite les bords flous aux extrémités */
+  z-index: 0;
+}
+
+.uc-card h1 {
+  margin: 0 0 8px;
+}
+.uc-card .muted {
+  color: #9fb0c0;
+}
+
+.uc-links {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
+.uc-links a {
+  display: block;
+  padding: 14px 18px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px solid var(--brand);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  transition: background 0.2s ease;
+}
+.uc-links a:hover {
+  background: rgba(178, 34, 34, 0.15);
+  box-shadow: 0 0 16px rgba(178, 34, 34, 0.35); /* léger halo au survol */
+}
+
+/* --- un petit lift avecléger glow. Discret mais perceptible. --- */
+.uc-links a {
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  will-change: transform;
+}
+
+.uc-links a:hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 12px rgba(178, 34, 34, 0.25);
+  border-color: color-mix(in srgb, var(--brand) 80%, #ffffff 20%);
+}
+
+/* accessibilité : réduit/stoppe l’anim si l’utilisateur préfère moins de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  .uc-links a {
+    transition: none;
+  }
+  .uc-links a:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
