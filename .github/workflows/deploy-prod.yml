@@ -1,0 +1,53 @@
+name: Deploy production
+
+on:
+  push:
+    branches: [ "main" ]   # déploiement au merge sur main
+    tags:     [ "v*" ]     # et/ou quand tu pousses un tag vX.Y.Z
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Optionnel: variables de build front
+      - name: Setup env file (production)
+        run: |
+          echo "VITE_ENV=production" >> .env
+          echo "VITE_ENABLE_ANALYTICS=false" >> .env
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Sync to S3 (prod)
+        run: aws s3 sync dist "s3://${{ secrets.S3_BUCKET }}/" --delete
+
+      - name: Invalidate CloudFront
+        if: ${{ secrets.CF_DISTRIBUTION_ID != '' }}
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ secrets.CF_DISTRIBUTION_ID }}" \
+            --paths "/*"
