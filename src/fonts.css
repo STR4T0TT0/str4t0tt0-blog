@@ -1,0 +1,64 @@
+/* ================================
+   Fonts configuration 
+   Adobe Fonts (Typekit) ne permet pas l’auto-hébergement
+   je prévois toujours une police système compatible si Adobe plante
+   ================================ */
+
+/* Import Adobe Fonts kit : Orbitron + Pragmatica + Roboto
+
+ * orbitron: http://typekit.com/eulas/00000000000000007735d9ba
+ * pragmatica: http://typekit.com/eulas/00000000000000007758da33
+ * roboto: http://typekit.com/eulas/00000000000000007735a0ac
+ *
+ * © 2009-2025 Adobe Systems Incorporated. All Rights Reserved.
+ */
+
+@import url("https://use.typekit.net/kvg6klf.css");
+
+/* Police en variables globales facilite mes tests / changements ultérieurs */
+:root {
+  --font-titles: "orbitron", sans-serif;
+  --font-highlight: "pragmatica", sans-serif;
+  --font-body: "roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif;
+}
+
+/* Corps de texte par défaut avec optimisation pour rendu plus net */
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+/* Titres principaux, focus tech */
+h1,
+h2,
+h3 {
+  font-family: var(--font-titles);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 0.6em 0;
+}
+
+/* Titres secondaires, neutre */
+h4,
+h5 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 0.5em 0;
+}
+
+/* Informations secondaires, data, highlight */
+h6,
+.highlight,
+.secondary {
+  font-family: var(--font-highlight);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--muted, #8b949e); /* utilise ta variable de couleur si définie */
+  margin: 0 0 0.4em 0;
+}

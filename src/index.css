@@ -1,0 +1,172 @@
+/* ==================================================================
+   Variables globales (palette & thème)
+   ================================================================== */
+:root {
+  color-scheme: dark;
+  --bg: #0d1117;
+  --panel: #0b121a;
+  --fg: #c9d1d9;
+  --muted: #8b949e;
+  --border: #30363d;
+  --accent: #58a6ff;
+
+  /* Palette officielle STR4T0TT0 (préfixée) */
+  --st0-black: #000000;
+  --st0-white: #ffffff;
+  --st0-gray: #8b949e;
+  --st0-red: #b22222;
+}
+
+/* ==================================================================
+   Reset & base
+   ================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Arial, sans-serif;
+}
+
+/* ==================================================================
+   Layout & header
+   ================================================================== */
+.wrap {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.brand {
+  font-weight: 800;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.langs a {
+  margin-left: 10px;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.langs a.active {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ==================================================================
+   Main card
+   ================================================================== */
+.main {
+  display: grid;
+  place-items: center;
+  padding: 28px;
+}
+
+.uc-card {
+  width: min(720px, 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  padding: 22px;
+  text-align: center;
+}
+
+.uc-card h1 {
+  margin: 0 0 10px;
+  font-size: 28px;
+}
+
+.uc-card .muted {
+  color: var(--muted);
+}
+
+.uc-card .cta a {
+  display: inline-block;
+  margin-top: 12px;
+  color: #081019;
+  background: var(--accent);
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+/* ==================================================================
+   Footer
+   ================================================================== */
+.foot {
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--muted);
+}
+
+.path {
+  opacity: 0.7;
+}
+
+/* ==================================================================
+   Linktree-style buttons
+   ================================================================== */
+.uc-links {
+  display: grid;
+  gap: 14px;
+  margin: 24px auto 0;
+  width: 100%;
+  max-width: 520px;
+}
+
+.uc-links a {
+  display: block;
+  text-align: center;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--st0-black);
+  color: var(--st0-white);
+  border: 2px solid var(--st0-red);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.uc-links a:hover {
+  background: var(--st0-red);
+  color: var(--st0-white);
+  transform: translateY(-2px);
+}
+
+.uc-links a:active {
+  transform: translateY(0);
+}
+
+/* ==================================================================
+   Responsive
+   ================================================================== */
+@media (max-width: 600px) {
+  .uc-card {
+    padding: 18px;
+  } /* ← corrige "padding: px;" */
+  .uc-card h1 {
+    font-size: 22px;
+  }
+}
