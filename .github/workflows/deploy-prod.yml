@@ -44,10 +44,12 @@ jobs:
 
       - name: Sync to S3 (prod)
         run: aws s3 sync dist "s3://${{ secrets.S3_BUCKET }}/" --delete
-
-      - name: Invalidate CloudFront
-        if: ${{ secrets.CF_DISTRIBUTION_ID != '' }}
+      
+      - name: Invalidate CloudFront (optional)
+        if: ${{ env.CF_DISTRIBUTION_ID != '' }}
+        env:
+            CF_DISTRIBUTION_ID: ${{ secrets.CF_DISTRIBUTION_ID }}
         run: |
-          aws cloudfront create-invalidation \
-            --distribution-id "${{ secrets.CF_DISTRIBUTION_ID }}" \
-            --paths "/*"
+            aws cloudfront create-invalidation \
+              --distribution-id "$CF_DISTRIBUTION_ID" \
+              --paths "/*"
