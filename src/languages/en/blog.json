@@ -1,0 +1,5 @@
+{
+  "time_to_read": "{{count}} min read",
+  "published_on": "Published on {{date}}",
+  "category": { "security": "Cybersecurity", "ai": "Artificial Intelligence", "crypto": "Crypto" }
+}

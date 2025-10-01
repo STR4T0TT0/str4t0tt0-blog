@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/* 
+  Convention : --{type}-{namespace}-{role}
+  Exemple : --color-str4t0tt0-primary
+
+  - type     = color, font, spacing, radius...
+  - namespace= str4t0tt0 
+  - role     = primary, secondary...
+*/
+
+@theme {
+  --font-str4t0tt0-orbitron: "orbitron", system-ui, sans-serif;
+  --font-str4t0tt0-roboto: "roboto", system-ui, sans-serif;
+  --font-str4t0tt0-prag: "pragmatica", "roboto", system-ui, sans-serif;
+  --color-str4t0tt0-primary: #B22222; 
+}
+
+/* base dark minimal */
+:root { color-scheme: dark; }
+body { @apply bg-black text-white antialiased; }
