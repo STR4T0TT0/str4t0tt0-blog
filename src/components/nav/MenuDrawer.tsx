@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo } from "react";
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@headlessui/react";
-import { XMarkIcon, HomeIcon, NewspaperIcon, UserIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon, HomeIcon, UserIcon, ShieldCheckIcon, CpuChipIcon, CircleStackIcon } from "@heroicons/react/24/solid";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { normLang } from "@/i18n";
@@ -37,11 +37,15 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
   }, [open]);
 
   const navItems = [
-    { to: withLang("/"), label: t("home"), icon: HomeIcon },
-    { to: withLang("/posts"), label: t("posts"), icon: NewspaperIcon },
-    { to: withLang("/about"), label: t("about"), icon: UserIcon },
+    { to: withLang("/"), label: t("home"), icon: HomeIcon, disabled: false },
+    // Catégories (non gérées pour l'instant
+    { to: "#", label: t("cybersecurity"), icon: ShieldCheckIcon, disabled: true },
+    { to: "#", label: t("ai"), icon: CpuChipIcon, disabled: true  },
+    { to: "#", label: t("crypto"), icon: CircleStackIcon, disabled: true  },
+    { to: withLang("/about"), label: t("about"), icon: UserIcon, disabled: false },
   ];
 
+  // besoin de homeUrl pour le NavLink 
   const homeUrl = withLang("/");
 
   return (
@@ -74,7 +78,7 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
             >
               <DialogPanel
                 id="app-menu"
-                className="w-[84vw] max-w-xs bg-[#0B0B0B] border-r border-white/10 shadow-2xl"
+                className="w-fit px-3 bg-[#0B0B0B] border-r border-white/10 shadow-2xl" //largeur menu
               >
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
@@ -91,28 +95,67 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
                 </div>
 
                 {/* Nav items */}
-                <nav className="px-2 py-2">
-                  <ul className="space-y-1">
-                    {navItems.map(({ to, label, icon: Icon }) => (
-                      <li key={to}>
-                        <NavLink
-                          to={to}
-                          end={to === homeUrl} // exact match for home
-                          className={({ isActive }) =>
-                            [
-                              "flex items-center gap-3 rounded-lg px-3",
-                              "h-12 md:h-14",
-                              "text-lg md:text-xl",
-                              "hover:bg-white/5",
-                              isActive ? "bg-white/5 border border-white/10" : "",
-                            ].join(" ")
-                          }
-                        >
-                          <Icon className="h-5 w-5 md:h-6 md:w-6 opacity-90" />
-                          <span className="truncate">{label}</span>
-                        </NavLink>
-                      </li>
-                    ))}
+                <nav className="px-3 py-4">
+                  <ul className="grid grid-cols-1 gap-3 md:gap-4 lg:gap-6"> {/* position des carrés */}
+                    {navItems.map(({ to, label, icon: Icon, disabled }) => {
+                      const common =
+                        "relative flex flex-col items-center justify-center rounded-xl" +   // carrés arrondis
+                        "aspect-square w-full max-w-[60px] md:max-w-[96px] lg:max-w-[140px] mx-auto" +  // ça doit être carré sortie desktop à corriger
+                        "border border-white/10 bg-white/[0.04] transition-colors transition-transform focus:outline-none" +
+                        "focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/1)]" +  //accent est  color-str4t0tt0-primary
+                        "focus-visible:ring-offset-1 focus-visible:ring-offset-[#0B0B0B]";  // mise en évidence
+                      
+                        const iconCls = "opacity-90 mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8";
+                      
+                        const labelCls = 
+                        "mt-0.5 text-center leading-snug break-words" +   // césure propre
+                        "max-w-[9ch] md:max-w-[14ch] lg:max-w-none " +  // longueur visuelle
+                        "text-[11px] md:text-sm lg:text-base";
+
+                      if (disabled) {
+                        return (
+                          <li key={to}>
+                            <div
+                              role="button"
+                              aria-disabled="true"
+                              className={common + " cursor-not-allowed opacity-80 hover:bg-white/[0.03]"}
+                            >
+                              {/* badge visible que sur desktop */}
+                              <span className="hidden lg:inline absolute right-2 top-2 rounded-md border border-white/10 px-1.5 py-0.5 text-xs opacity-70">
+                                {t("disabled")}
+                              </span>
+                              <Icon className={iconCls} />
+                              <span className={labelCls}>{label}</span>
+                            </div>
+                          </li>
+                        );
+                      }
+
+                      return (
+                        <li key={to}>
+                          <NavLink
+                            to={to}
+                            end={to === homeUrl} // déclarer plus haut
+                            className={({ isActive }) =>
+                              [
+                                common,
+                                "hover:bg-white/[0.06]",
+                                isActive ? "bg-white/[0.08]" : "",
+                                // Survol avec léger tint + bordure rouge + halo + micro-lift
+                                "hover:bg-[rgb(var(--color-str4t0tt0-primary-rgb)/0.15)]",
+                                "hover:border-[rgb(var(--color-str4t0tt0-primary-rgb)/0.60)]",
+                                "hover:ring-1 hover:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/0.50)]",
+                                 // bouton selection page active 
+                                 isActive ? "bg-[rgb(var(--color-str4t0tt0-primary-rgb)/0.25)] border-[rgb(var(--color-str4t0tt0-primary-rgb)/0.70)] ring-2 ring-[rgb(var(--color-str4t0tt0-primary-rgb)/0.60)] shadow-md" : ""
+                              ].join(" ")
+                            }
+                          >
+                            <Icon className={iconCls} />
+                            <span className={labelCls}>{label}</span>
+                          </NavLink>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </nav>
               </DialogPanel>
