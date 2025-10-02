@@ -1,7 +1,10 @@
 {
   "home": "Pagina principale ",
-  "posts": "Articoli",
+  "cybersecurity": "Sicurezza informatica",
+  "ai": "Intelligenza artificiale",
+  "crypto": "Criptovalute",
   "about": "Chi Siamo",
+  "disabled": "Presto",
   "title": "Menu",
   "close": "Chiudere il menu"
 }

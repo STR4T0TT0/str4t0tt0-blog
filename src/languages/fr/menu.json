@@ -1,7 +1,10 @@
 {
   "home": "Accueil",
-  "posts": "Articles",
+  "cybersecurity": "Cybersecurité",
+  "ai": "Intelligence Artificielle",
+  "crypto": "Cryptomonnaies",
   "about": "À propos",
+  "disabled": "Bientôt",
   "title": "Menu",
   "close": "Fermer le menu"
 }

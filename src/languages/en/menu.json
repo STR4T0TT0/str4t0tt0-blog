@@ -1,7 +1,11 @@
 {
   "home": "Home",
-  "posts": "Publications",
+  "cybersecurity": "Cybersecurity",
+  "ai": "Artificial Intelligence",
+  "crypto": "Cryptocurrencies",
   "about": "About",
+  "disabled": "Soon",
   "title": "Menu",
   "close": "Close menu"
+
 }
