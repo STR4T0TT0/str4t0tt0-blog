@@ -1,0 +1,45 @@
+name: Deploy staging
+
+on:
+  push:
+    branches: [ "staging" ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Injecte l'env pour le build (bandeau STAGING, etc.)
+      - name: Setup env file (staging)
+        run: |
+          echo "VITE_ENV=staging" >> .env
+          echo "VITE_ENABLE_ANALYTICS=false" >> .env
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Sync to S3 (staging)
+        run: aws s3 sync dist "s3://${{ secrets.S3_BUCKET }}/" --delete
