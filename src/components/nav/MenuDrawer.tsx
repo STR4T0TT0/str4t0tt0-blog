@@ -26,7 +26,7 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
   // Si on navigue, on ferme le menu
   useEffect(() => {
     if (open) onClose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [pathname]);
 
   // Garde le scroll bloqué tant que le menu est ouvert
@@ -38,10 +38,10 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
 
   const navItems = [
     { to: withLang("/"), label: t("home"), icon: HomeIcon, disabled: false },
-    // Catégories (non gérées pour l'instant
-    { to: "#", label: t("cybersecurity"), icon: ShieldCheckIcon, disabled: true },
-    { to: "#", label: t("ai"), icon: CpuChipIcon, disabled: true  },
-    { to: "#", label: t("crypto"), icon: CircleStackIcon, disabled: true  },
+    // Catégories du menu reste deux à faire
+    { to: withLang("/cybersecurity"), label: t("cybersecurity"), icon: ShieldCheckIcon, disabled: false },
+    { to: withLang("/artificial-intelligence"), label: t("ai"), icon: CpuChipIcon, disabled: true  },
+    { to: withLang("/cryptocurrency"), label: t("crypto"), icon: CircleStackIcon, disabled: true  },
     { to: withLang("/about"), label: t("about"), icon: UserIcon, disabled: false },
   ];
 
@@ -97,7 +97,7 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
                 {/* Nav items */}
                 <nav className="px-3 py-4">
                   <ul className="grid grid-cols-1 gap-3 md:gap-4 lg:gap-6"> {/* position des carrés */}
-                    {navItems.map(({ to, label, icon: Icon, disabled }) => {
+                    {navItems.map(({ to, label, icon: Icon, disabled }, idx ) => {
                       const common =
                         "relative flex flex-col items-center justify-center rounded-xl" +   // carrés arrondis
                         "aspect-square w-full max-w-[60px] md:max-w-[96px] lg:max-w-[140px] mx-auto" +  // ça doit être carré sortie desktop à corriger
@@ -114,7 +114,7 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
 
                       if (disabled) {
                         return (
-                          <li key={to}>
+                         <li key={`${label}-${idx}`}> {/* evite les comportement chelou avec juste <li key={to}> */}
                             <div
                               role="button"
                               aria-disabled="true"
@@ -132,7 +132,7 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
                       }
 
                       return (
-                        <li key={to}>
+                        <li key={`${label}-${to}`}> {/* garantir unicité ? old </li><li key={to}> */}
                           <NavLink
                             to={to}
                             end={to === homeUrl} // déclarer plus haut
