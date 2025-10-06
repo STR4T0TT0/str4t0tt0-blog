@@ -5,12 +5,14 @@ import Header from './components/Header'
 import TypoSpecimen from './views/TypoSpecimen' 
 // pages uniques, voir plus loin dans le code pour la modification de la route
 import AboutPage from './views/AboutPage'
+import CategoryView from './views/CategoryView'
 
 function LangGuardLayout() {
   const { pathname, search, hash } = useLocation()
   const nav = useNavigate()
   const { lang: raw } = useParams()
   const lang = normLang(raw)
+  
 
   // redirige /, /de, /xx → /en (ou /fr / it si valide)
   if (!raw || !(SUPPORTED as readonly string[]).includes(raw)) {
@@ -42,7 +44,8 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       // ajouter ici les pages uniques comme pour la page about
       { path: 'about', element: <AboutPage /> },
-      { path: 'specimen', element: <TypoSpecimen /> },  // pour tests typo
+      { path: 'specimen', element: <TypoSpecimen /> },  // page orpheline pour tests typo
+      { path: ':category', element: <CategoryView /> }, // navigation en /langue/categorie
       // { path: 'article/:slug', element: <Article /> }, // plus tard
     ]
   },
