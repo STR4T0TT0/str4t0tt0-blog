@@ -1,5 +1,11 @@
 {
   "time_to_read": "{{count}} min read",
   "published_on": "Published on {{date}}",
-  "category": { "security": "Cybersecurity", "ai": "Artificial Intelligence", "crypto": "Crypto" }
+  "category": { "security": "Cybersecurity", "ai": "Artificial Intelligence", "crypto": "Crypto" },
+  "backToCategory": "Back to {{category}}",
+  "notAvailable": "This article is not available in {{lang}}.",
+  "viewIn": "Read in {{lang}}",
+  "goToCategory": "Back to {{category}}",
+  "autoRedirect": "You will be redirected in {{s}}s…",
+  "readMoreInCategory": "Read more in {{category}}"
 }

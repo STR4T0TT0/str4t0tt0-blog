@@ -98,19 +98,21 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
                 <nav className="px-3 py-4">
                   <ul className="grid grid-cols-1 gap-3 md:gap-4 lg:gap-6"> {/* position des carrés */}
                     {navItems.map(({ to, label, icon: Icon, disabled }, idx ) => {
+                      const accent = "text-[#B22222]"; // color-str4t0tt0-primary  
                       const common =
                         "relative flex flex-col items-center justify-center rounded-xl" +   // carrés arrondis
                         "aspect-square w-full max-w-[60px] md:max-w-[96px] lg:max-w-[140px] mx-auto" +  // ça doit être carré sortie desktop à corriger
                         "border border-white/10 bg-white/[0.04] transition-colors transition-transform focus:outline-none" +
                         "focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/1)]" +  //accent est  color-str4t0tt0-primary
                         "focus-visible:ring-offset-1 focus-visible:ring-offset-[#0B0B0B]";  // mise en évidence
+                        "text-white/85 hover:text-[#B22222]"; // texte normal et hover accent
+
+                      const iconCls = "opacity-90 mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8 transition-colors";// transition-colors hérite couleur du parent
                       
-                        const iconCls = "opacity-90 mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8";
-                      
-                        const labelCls = 
+                      const labelCls = 
                         "mt-0.5 text-center leading-snug break-words" +   // césure propre
                         "max-w-[9ch] md:max-w-[14ch] lg:max-w-none " +  // longueur visuelle
-                        "text-[11px] md:text-sm lg:text-base";
+                        "text-[11px] md:text-sm lg:text-base transition-colors"; // transition-colors hérite couleur du parent
 
                       if (disabled) {
                         return (
@@ -118,7 +120,7 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
                             <div
                               role="button"
                               aria-disabled="true"
-                              className={common + " cursor-not-allowed opacity-80 hover:bg-white/[0.03]"}
+                              className={common + " cursor-not-allowed opacity-70 pointer-events-none"}
                             >
                               {/* badge visible que sur desktop */}
                               <span className="hidden lg:inline absolute right-2 top-2 rounded-md border border-white/10 px-1.5 py-0.5 text-xs opacity-70">
@@ -139,14 +141,8 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
                             className={({ isActive }) =>
                               [
                                 common,
-                                "hover:bg-white/[0.06]",
-                                isActive ? "bg-white/[0.08]" : "",
-                                // Survol avec léger tint + bordure rouge + halo + micro-lift
-                                "hover:bg-[rgb(var(--color-str4t0tt0-primary-rgb)/0.15)]",
-                                "hover:border-[rgb(var(--color-str4t0tt0-primary-rgb)/0.60)]",
-                                "hover:ring-1 hover:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/0.50)]",
-                                 // bouton selection page active 
-                                 isActive ? "bg-[rgb(var(--color-str4t0tt0-primary-rgb)/0.25)] border-[rgb(var(--color-str4t0tt0-primary-rgb)/0.70)] ring-2 ring-[rgb(var(--color-str4t0tt0-primary-rgb)/0.60)] shadow-md" : ""
+                                // Actif = rouge permanent (icône + texte)
+                                isActive ? accent : ""                              
                               ].join(" ")
                             }
                           >

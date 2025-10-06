@@ -15,10 +15,12 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* les alias et les règles pour les imports */
+    /* les alias et les règles pour les imports 
+    éviter les erreurs liées à JSX car pas de déclarations 
+    des types React.*/
     "baseUrl": ".",                       
     "paths": { "@/*": ["src/*"] },  
-    "types": ["vite/client"],      
+    "types": ["vite/client", "react", "react-dom"],      
     "resolveJsonModule": true,            
     "esModuleInterop": true,           
 

@@ -1,11 +1,16 @@
 import { createBrowserRouter, Navigate, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
-import i18n, { normLang, SUPPORTED, type Lang } from './i18n'
-import Home from './views/home'
-import Header from './components/Header'
-import TypoSpecimen from './views/TypoSpecimen' 
+import i18n, { normLang, SUPPORTED, type Lang } from '../i18n'
+import Home from '../views/home'
+import Header from '../components/nav/Header'
+import TypoSpecimen from '../views/TypoSpecimen' 
 // pages uniques, voir plus loin dans le code pour la modification de la route
-import AboutPage from './views/AboutPage'
-import CategoryView from './views/CategoryView'
+import AboutPage from '../views/AboutPage'
+import CategoryView from '../views/CategoryView'
+import ArticleView from '../views/ArticleView'
+// redirige vers /en si langue invalide ou absente
+import CatchAllToEn from "@/router/CatchAllToEn";
+
+
 
 function LangGuardLayout() {
   const { pathname, search, hash } = useLocation()
@@ -23,6 +28,8 @@ function LangGuardLayout() {
     nav(safe + search + hash, { replace: true })
     return null
   }
+
+
 
   // sync i18n avec l'URL
   if (i18n.language !== lang) i18n.changeLanguage(lang as Lang)
@@ -42,13 +49,14 @@ export const router = createBrowserRouter([
     element: <LangGuardLayout />,
     children: [
       { index: true, element: <Home /> },
-      // ajouter ici les pages uniques comme pour la page about
+      // navigation en /langue/categorie/slug
+      { path: ':category', element: <CategoryView /> },
+      { path: ':category/:slug', element: <ArticleView /> },
+      // Ajouter ici les pages hors catégories
       { path: 'about', element: <AboutPage /> },
-      { path: 'specimen', element: <TypoSpecimen /> },  // page orpheline pour tests typo
-      { path: ':category', element: <CategoryView /> }, // navigation en /langue/categorie
-      // { path: 'article/:slug', element: <Article /> }, // plus tard
+      { path: 'specimen', element: <TypoSpecimen /> }  // Tests polices
     ]
   },
   // catch-all → /en
-  { path: '*', element: <Navigate to="/en" replace /> }
+  { path: '*', element: <CatchAllToEn /> }
 ])

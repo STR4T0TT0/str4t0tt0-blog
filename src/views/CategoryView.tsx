@@ -4,7 +4,8 @@ import CategoryBar from "@/components/nav/CategoryBar";
 import PostCardMobile from "@/components/posts/PostCardMobile";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import type { PostMeta } from "@/types/post";
-import { CheckBadgeIcon } from "@heroicons/react/24/solid";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
+import Container from "@/components/layout/Container";
 
 const PAGE_SIZE = 6;
 
@@ -70,6 +71,7 @@ export default function CategoryView() {
       {/* Réserve la hauteur de la CategoryBar (h-11 = 44px) */}
       <div className="h-11" aria-hidden /> {/* réserve la place */}
      <main className="px-4 pb-20 pt-[44px]">
+        <Container>
         {/* Grille responsive avec mobile 1, tablette 2, desktop 3 colonnes */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
          {chunk.map((post) => (
@@ -82,12 +84,13 @@ export default function CategoryView() {
         <div ref={sentinelRef} />
         {visible >= allPosts.length && allPosts.length > 0 && (
           <div className="mt-6 flex items-center justify-center">
-            <CheckBadgeIcon className="h-6 w-6 text-white/50" aria-hidden />
+            <EllipsisHorizontalIcon className="h-6 w-6 text-white/50" aria-hidden />
           </div>
         )}
         {allPosts.length === 0 && (
           <p className="mt-6 text-center text-sm text-white/60">Aucun article.</p>
         )}
+        </Container>
       </main>
     </div>
   );

@@ -1,0 +1,44 @@
+@tailwind components;
+
+@layer components {
+  /* wrapper commun à tous les articles */
+  .prose-article {
+    @apply max-w-none text-white;
+  }
+
+  .prose-article :where(p) {
+    @apply leading-7/relaxed text-[15px] md:text-base text-white/90;
+  }
+
+  .prose-article :where(h1) {
+    @apply text-2xl md:text-3xl font-semibold tracking-tight text-white mb-2;
+  }
+
+  .prose-article :where(h2) {
+    @apply text-xl md:text-2xl font-semibold text-white mt-8 mb-3;
+  }
+
+  .prose-article :where(h3) {
+    @apply text-lg md:text-xl font-semibold text-white mt-6 mb-2;
+  }
+
+  .prose-article :where(ul, ol) {
+    @apply my-4 pl-5 space-y-1;
+  }
+
+  .prose-article :where(li) {
+    @apply marker:text-white/60;
+  }
+
+  .prose-article :where(a) {
+    @apply text-[#B22222] underline-offset-2 hover:underline;
+  }
+
+  .prose-article :where(code) {
+    @apply px-1.5 py-0.5 rounded bg-white/10 text-white/90;
+  }
+
+  .prose-article :where(hr) {
+    @apply border-white/10 my-8;
+  }
+}

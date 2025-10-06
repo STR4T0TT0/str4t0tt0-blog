@@ -2,7 +2,7 @@ import { parseFrontmatter } from './parseFrontmatter';
 
 type Lang = 'en' | 'fr' | 'it';
 
-// .md sont des assets voir vite.config: assetsInclude 
+// .md sont des assets traités via vite.config: assetsInclude 
 const globs: Record<Lang, Record<string, () => Promise<unknown>>> = {
   en: import.meta.glob('/src/content/en/posts/**/*.md', { query: '?raw' }),
   fr: import.meta.glob('/src/content/fr/posts/**/*.md', { query: '?raw' }),
@@ -14,6 +14,9 @@ export async function loadPosts(lang: Lang) {
   const posts: any[] = [];
   // fallback si pas d'image dans le frontmatter depuis public
   const PLACEHOLDER = '/content/shared/image-str4t0tt0-fallback-neutral-lg.webp';
+  // Pour éviter de planter le site si FM absent ou erroné
+  const CATS = new Set(['cybersecurity', 'ai', 'crypto']);
+
 
   for (const [path, loader] of Object.entries(modules)) {
     const mod: any = await loader();                // module ESM
@@ -42,11 +45,28 @@ const safeExcerpt = (data?.excerpt ?? '').toString();
       return img !== '' ? img : PLACEHOLDER;
     })();
 
+    // déduire la catégorie depuis le chemin si absente FM
+    const fromPath = path.match(/\/posts\/([^/]+)\//)?.[1];
+    const catFromPath = fromPath && CATS.has(fromPath) ? (fromPath as 'cybersecurity'|'ai'|'crypto') : undefined;
+ 
+    // Soit le FM est valide soit on remplace avec la cat du dossier
+    const catFromFM = (typeof data?.category === 'string' && CATS.has(data.category))
+      ? (data.category as 'cybersecurity'|'ai'|'crypto')
+      : undefined;
+    const finalCategory = catFromFM ?? catFromPath;
+
+    // DEBUG : alerte si FM différent dossier
+    if (catFromFM && catFromPath && catFromFM !== catFromPath) {
+      console.warn('[loadPosts] category mismatch FM vs path:', { path, fm: catFromFM, folder: catFromPath });
+    }
+    
+    // Gestion du post ici
+    
     posts.push({
       title: safeTitle,
       slug: safeSlug,
       date: safeDate,
-      category: data?.category,   // doit être 'cybersecurity' | 'ai' | 'crypto'
+      category: finalCategory,
       tags: Array.isArray(data?.tags) ? data.tags : [],
       excerpt: safeExcerpt,
       image: safeImage,
