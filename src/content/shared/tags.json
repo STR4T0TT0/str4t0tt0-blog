@@ -1,0 +1,17 @@
+{
+  "cybersecurity": [
+    "network-security",
+    "pentest",
+    "privacy"
+  ],
+  "ai": [
+    "machine-learning",
+    "ethics",
+    "nlp"
+  ],
+  "crypto": [
+    "blockchain",
+    "stablecoin",
+    "defi"
+  ]
+}
