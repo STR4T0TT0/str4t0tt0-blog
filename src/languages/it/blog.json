@@ -1,5 +1,5 @@
 {
   "time_to_read": "{{count}} min di lettura",
   "published_on": "Pubblicato il {{date}}",
-  "category": { "security": "Cybersecurity", "ai": "Intelligenza artificiale", "crypto": "Crypto" }
+  "categories": { "cybersecurity": "Cybersecurity", "ai": "Intelligenza artificiale", "crypto": "Crypto" }
 }
