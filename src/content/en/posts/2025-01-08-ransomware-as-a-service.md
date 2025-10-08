@@ -3,7 +3,7 @@ title: "The Rise of Ransomware-as-a-Service"
 date: "2025-01-08"
 slug: "ransomware-as-a-service"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 

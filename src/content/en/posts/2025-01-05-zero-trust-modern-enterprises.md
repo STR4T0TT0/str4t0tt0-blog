@@ -3,7 +3,7 @@ title: "Zero Trust in Modern Enterprises"
 date: "2025-01-05"
 slug: "zero-trust-modern-enterprises"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 

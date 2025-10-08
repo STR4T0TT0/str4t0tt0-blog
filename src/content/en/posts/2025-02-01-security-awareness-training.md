@@ -3,7 +3,7 @@ title: "The Human Factor: Security Awareness Training"
 date: "2025-02-01"
 slug: "security-awareness-training"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 
