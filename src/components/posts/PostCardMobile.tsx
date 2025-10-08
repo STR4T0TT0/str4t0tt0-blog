@@ -1,12 +1,13 @@
 import type { PostMeta } from "@/types/post";
 import { Link } from "react-router-dom";
+import { ROUTES } from "@/router/routes";
 
 export default function PostCardMobile({ post }: { post: PostMeta }) {
   const title = (post.title ?? "").toString().trim() || "(untitled)";
   const d = new Date(post.date);
   const dateStr = isNaN(d.getTime()) ? "" : d.toLocaleDateString();
     // Sécurité si pas de chemin complet
- const href = post.path ?? `/${post.lang}/post/${post.slug}`;
+ const href = ROUTES.post(post.lang, post.category ?? post.category, post.slug);
 
   return (
     <article className="rounded-2xl overflow-hidden bg-white/5 ring-1 ring-white/10">
