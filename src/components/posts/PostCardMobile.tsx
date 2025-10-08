@@ -1,9 +1,12 @@
 import type { PostMeta } from "@/types/post";
+import { Link } from "react-router-dom";
 
 export default function PostCardMobile({ post }: { post: PostMeta }) {
   const title = (post.title ?? "").toString().trim() || "(untitled)";
   const d = new Date(post.date);
   const dateStr = isNaN(d.getTime()) ? "" : d.toLocaleDateString();
+    // Sécurité si pas de chemin complet
+ const href = post.path ?? `/${post.lang}/post/${post.slug}`;
 
   return (
     <article className="rounded-2xl overflow-hidden bg-white/5 ring-1 ring-white/10">
@@ -20,6 +23,12 @@ export default function PostCardMobile({ post }: { post: PostMeta }) {
         <h2 className="text-base font-semibold leading-snug">{title}</h2>
         {dateStr && <p className="text-xs text-white/60 mt-1">{dateStr}</p>}
       </div>
+      {/* Lien overlay plein cadre, accessible au clavier */}
+          <Link
+            to={href}
+            aria-label={title}
+            className="absolute inset-0 z-10"
+          />
     </article>
   );
 }

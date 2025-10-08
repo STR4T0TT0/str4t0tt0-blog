@@ -1,5 +1,11 @@
 {
   "time_to_read": "{{count}} min de lecture",
   "published_on": "Publié le {{date}}",
-  "categories": { "cybersecurity": "Cybersécurité", "ai": "Intelligence artificielle", "crypto": "Crypto" }
+  "categories": { "cybersecurity": "Cybersécurité", "ai": "Intelligence artificielle", "crypto": "Crypto" },
+  "backToCategory": "Retour à {{category}}",
+  "notAvailable": "Cet article n’est pas disponible en {{lang}}.",
+  "viewIn": "Lire en {{lang}}",
+  "goToCategory": "Retour à {{category}}",
+  "autoRedirect": "Redirection dans {{s}} s…",
+  "readMoreInCategory": "Pour aller plus loin sur {{category}}"
 }
