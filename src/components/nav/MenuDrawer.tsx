@@ -1,6 +1,22 @@
 import { Fragment, useEffect, useMemo } from "react";
-import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@headlessui/react";
-import { XMarkIcon, HomeIcon, UserIcon, ShieldCheckIcon, CpuChipIcon, CircleStackIcon } from "@heroicons/react/24/solid";
+
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
+
+import {
+  XMarkIcon,
+  HomeIcon,
+  UserIcon,
+  ShieldCheckIcon,
+  CpuChipIcon,
+  CircleStackIcon,
+} from "@heroicons/react/24/solid";
+
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { normLang } from "@/i18n";
@@ -15,37 +31,37 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
   const { pathname } = useLocation();
   const { lang: rawLang } = useParams();
   const lang = useMemo(() => normLang(rawLang), [rawLang]);
+
+  // Préfixe toujours la route avec la langue (/fr/..., /en/...)
   const withLang = (path: string) => {
     const base = `/${lang}`;
     const p = path || "/";
-    return p === "/"
-      ? `${base}/`
-      : `${base}${p.startsWith("/") ? p : `/${p}`}`;
+    return p === "/" ? `${base}/` : `${base}${p.startsWith("/") ? p : `/${p}`}`;
   };
 
-  // Si on navigue, on ferme le menu
+  // Ferme le menu dès qu'on navigue
   useEffect(() => {
     if (open) onClose();
-
   }, [pathname]);
 
-  // Garde le scroll bloqué tant que le menu est ouvert
+  // Bloque le scroll quand le menu est ouvert
   useEffect(() => {
     const el = document.documentElement;
-    open ? el.classList.add("overflow-hidden") : el.classList.remove("overflow-hidden");
+    open
+      ? el.classList.add("overflow-hidden")
+      : el.classList.remove("overflow-hidden");
     return () => el.classList.remove("overflow-hidden");
   }, [open]);
 
   const navItems = [
     { to: withLang("/"), label: t("home"), icon: HomeIcon, disabled: false },
-    // Catégories du menu reste deux à faire
     { to: withLang("/cybersecurity"), label: t("cybersecurity"), icon: ShieldCheckIcon, disabled: false },
-    { to: withLang("/artificial-intelligence"), label: t("ai"), icon: CpuChipIcon, disabled: true  },
-    { to: withLang("/cryptocurrency"), label: t("crypto"), icon: CircleStackIcon, disabled: true  },
+    { to: withLang("/artificial-intelligence"), label: t("ai"), icon: CpuChipIcon, disabled: true },
+    { to: withLang("/cryptocurrency"), label: t("crypto"), icon: CircleStackIcon, disabled: true },
     { to: withLang("/about"), label: t("about"), icon: UserIcon, disabled: false },
   ];
 
-  // besoin de homeUrl pour le NavLink 
+  // Nécessaire pour que "/" soit considéré actif uniquement sur l'accueil
   const homeUrl = withLang("/");
 
   return (
@@ -78,7 +94,7 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
             >
               <DialogPanel
                 id="app-menu"
-                className="w-fit px-3 bg-[#0B0B0B] border-r border-white/10 shadow-2xl" //largeur menu
+                className="w-fit px-3 bg-[#0B0B0B] border-r border-white/10 shadow-2xl"
               >
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
@@ -94,65 +110,93 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
                   </button>
                 </div>
 
-                {/* Nav items */}
+                {/* Navigation de items */}
                 <nav className="px-3 py-4">
-                  <ul className="grid grid-cols-1 gap-3 md:gap-4 lg:gap-6"> {/* position des carrés */}
-                    {navItems.map(({ to, label, icon: Icon, disabled }, idx ) => {
-                      const common =
-                        "relative flex flex-col items-center justify-center rounded-xl" +   // carrés arrondis
-                        "aspect-square w-full max-w-[60px] md:max-w-[96px] lg:max-w-[140px] mx-auto" +  // ça doit être carré sortie desktop à corriger
-                        "border border-white/10 bg-white/[0.04] transition-colors transition-transform focus:outline-none" +
-                        "focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/1)]" +  //accent est  color-str4t0tt0-primary
-                        "focus-visible:ring-offset-1 focus-visible:ring-offset-[#0B0B0B]";  // mise en évidence
-                      
-                        const iconCls = "opacity-90 mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8";
-                      
-                        const labelCls = 
-                        "mt-0.5 text-center leading-snug break-words" +   // césure propre
-                        "max-w-[9ch] md:max-w-[14ch] lg:max-w-none " +  // longueur visuelle
-                        "text-[11px] md:text-sm lg:text-base";
+                  <ul className="grid grid-cols-1 gap-3 md:gap-4 lg:gap-6">
+                    {navItems.map(({ to, label, icon: Icon, disabled }, idx) => {
+                      /**
+                       * Un item disabled ne doit pas réagir au hover ni au focus.
+                       * - baseBox : disposition en carré et centré
+                       * - enabled : on ajoute "group" pour activer group-hover
+                       * - disabled : rendu figé + pas de group (donc aucun hover)
+                       *
+                       * ATTENTION A LA CONCATENATION : chaque string doit commencer par un espace !
+                       */
+                      const baseBox =
+                        "relative flex flex-col items-center justify-center rounded-xl" +
+                        " aspect-square w-full max-w-[60px] md:max-w-[96px] lg:max-w-[140px] mx-auto" +
+                        " transition-colors focus:outline-none";
+                      const commonEnabled = "group " + baseBox;
+                      const commonDisabled = baseBox + " cursor-not-allowed opacity-60";
 
+                      // Enfants (icône + label)
+                      // Enabled : héritent de la couleur du parent (hover/active).
+                      const iconEnabled =
+                        "mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8 transition-colors";
+                      const labelEnabled =
+                        "mt-0.5 text-center leading-tight break-normal transition-colors" +
+                        " max-w-[12ch] md:max-w-[14ch] lg:max-w-none text-[10px] md:text-sm lg:text-base";
+
+                      // Disabled : couleur figée et atténuée, aucune réaction au hover.
+                      const iconDisabled =
+                        "mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8 text-white/70";
+                      const labelDisabled =
+                        "mt-0.5 text-center leading-tight break-normal" +
+                        " max-w-[12ch] md:max-w-[14ch] lg:max-w-none text-[10px] md:text-sm lg:text-base text-white/50";
                       if (disabled) {
                         return (
-                         <li key={`${label}-${idx}`}> {/* evite les comportement chelou avec juste <li key={to}> */}
+                          <li key={`${label}-${idx}`}>
                             <div
                               role="button"
                               aria-disabled="true"
-                              className={common + " cursor-not-allowed opacity-80 hover:bg-white/[0.03]"}
+                              tabIndex={-1}
+                              className={commonDisabled}
                             >
-                              {/* badge visible que sur desktop */}
+                              {/* Badge "Soon- Bientôt-Presto" est visible seulement sur desktop */}
                               <span className="hidden lg:inline absolute right-2 top-2 rounded-md border border-white/10 px-1.5 py-0.5 text-xs opacity-70">
                                 {t("disabled")}
                               </span>
-                              <Icon className={iconCls} />
-                              <span className={labelCls}>{label}</span>
+                              <Icon className={iconDisabled} />
+                              <span className={labelDisabled}>{label}</span>
                             </div>
                           </li>
                         );
                       }
 
                       return (
-                        <li key={`${label}-${to}`}> {/* garantir unicité ? old </li><li key={to}> */}
-                          <NavLink
-                            to={to}
-                            end={to === homeUrl} // déclarer plus haut
-                            className={({ isActive }) =>
-                              [
-                                common,
-                                "hover:bg-white/[0.06]",
-                                isActive ? "bg-white/[0.08]" : "",
-                                // Survol avec léger tint + bordure rouge + halo + micro-lift
-                                "hover:bg-[rgb(var(--color-str4t0tt0-primary-rgb)/0.15)]",
-                                "hover:border-[rgb(var(--color-str4t0tt0-primary-rgb)/0.60)]",
-                                "hover:ring-1 hover:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/0.50)]",
-                                 // bouton selection page active 
-                                 isActive ? "bg-[rgb(var(--color-str4t0tt0-primary-rgb)/0.25)] border-[rgb(var(--color-str4t0tt0-primary-rgb)/0.70)] ring-2 ring-[rgb(var(--color-str4t0tt0-primary-rgb)/0.60)] shadow-md" : ""
-                              ].join(" ")
-                            }
-                          >
-                            <Icon className={iconCls} />
-                            <span className={labelCls}>{label}</span>
-                          </NavLink>
+                        <li key={`${label}-${to}`}>
+                          {(() => {
+                              const normalize = (s: string) => s.replace(/\/+$/, "");
+                              const current = normalize(pathname);
+                              const target  = normalize(to);
+                              const isHome  = target === normalize(homeUrl);
+
+                              // Accueil passe en actif seulement si URL exacte.
+                              // Autres pages : exact OU sous-routes.
+                              const active = isHome
+                                ? current === target
+                                : current === target || current.startsWith(target + "/");
+
+
+                            // Logique de toggle pas d'empilement text-white + text-[...]
+                            return (
+                              <NavLink
+                                to={to}
+                                end={to === homeUrl}
+                                className={[
+                                  commonEnabled,
+                                  active
+                                    ? "text-[rgb(var(--color-str4t0tt0-primary-rgb)/1)]" // actif = rouge
+                                    : "text-white",                                      // sinon = blanc
+                                  "hover:text-[rgb(var(--color-str4t0tt0-primary-rgb)/1)]",
+                                  "focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/0.6)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0B0B]",
+                                ].join(" ")}
+                              >
+                                <Icon className={iconEnabled} />
+                                <span className={labelEnabled}>{label}</span>
+                              </NavLink>
+                            );
+                          })()}
                         </li>
                       );
                     })}

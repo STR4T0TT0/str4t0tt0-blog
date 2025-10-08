@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import i18n, { normLang, SUPPORTED, type Lang } from './i18n'
 import Home from './views/home'
-import Header from './components/Header'
+import Header from './components/nav/Header'
 import TypoSpecimen from './views/TypoSpecimen' 
 // pages uniques, voir plus loin dans le code pour la modification de la route
 import AboutPage from './views/AboutPage'

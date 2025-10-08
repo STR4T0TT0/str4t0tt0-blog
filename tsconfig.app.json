@@ -18,7 +18,7 @@
     /* les alias et les règles pour les imports */
     "baseUrl": ".",                       
     "paths": { "@/*": ["src/*"] },  
-    "types": ["vite/client"],      
+    "types": ["vite/client", "react", "react-dom"],      
     "resolveJsonModule": true,            
     "esModuleInterop": true,           
 
