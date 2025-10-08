@@ -6,10 +6,13 @@ const globs = {
   it: import.meta.glob('/src/content/it/posts/**/*.md', { query: '?raw' }),
 };
 
+
+
 export async function getPostBySlug(lang: "en" | "fr" | "it", slug?: string) {
   if (!slug) return null;
   const entries = Object.entries(globs[lang]);
   for (const [path, loader] of entries) {
+    void path; // non utilisé pour l’instant, pour éviter TS6133
     const mod: any = await loader();
     const raw: unknown = mod?.default ?? mod;
     if (typeof raw !== 'string') continue;
@@ -29,5 +32,6 @@ export async function getPostBySlug(lang: "en" | "fr" | "it", slug?: string) {
       };
     }
   }
+  
   return null;
 }
