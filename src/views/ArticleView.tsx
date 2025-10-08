@@ -8,6 +8,7 @@ import PostCardMobile from "@/components/posts/PostCardMobile";
 import { useTranslation } from "react-i18next";
 import { SUPPORTED, type Lang } from "@/i18n";
 import type { PostMeta } from "@/types/post";
+import type { ComponentType } from "react";
 
 const internalFromSeo = {
   "cybersecurity": "cybersecurity",
@@ -23,7 +24,7 @@ const seoFromCat = {
 
 export default function ArticleView() {
   const { lang = "en", category = "cybersecurity", slug = "" } = useParams();
-  const [state, setState] = useState<{ html: string; title: string; date?: string } | null>(null);
+  const [state, setState] = useState<{ Component: ComponentType<any>; title: string; date?: string } | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [langsAvailable, setLangsAvailable] = useState<Lang[]>([]);
   const [countdown, setCountdown] = useState(5);
@@ -47,7 +48,8 @@ export default function ArticleView() {
       const title = (res.meta?.title ?? "").toString();
       const date = res.meta?.date as string | undefined;
       document.title = `STR4T0TT0 | ${title}`;
-      setState({ html: (res.html as string) || "", title, date });
+      // pas de string HTML avec MDX on donne le composant à rendre
+      setState({ Component: res.Component, title, date }); 
       setNotFound(false);
       setLangsAvailable([]);
     });
@@ -135,7 +137,8 @@ export default function ArticleView() {
                     {new Date(state.date).toLocaleDateString()}
                   </p>
                 )}
-                <div dangerouslySetInnerHTML={{ __html: state.html }} />
+                {/* 👉 Rendu MDX */}
+                <state.Component />
               </article>
 
               <hr className="my-8 border-white/10" />

@@ -21,6 +21,4 @@ export default defineConfig({
     }),
    ],      
   resolve: { alias: { '@': '/src'  },},
-  // Forcer Vite à traiter les .md comme des assets "bruts"
-assetsInclude: ['**/*.md']
 })

@@ -1,37 +1,48 @@
-import { parseFrontmatter } from "./parseFrontmatter";
+type Lang = 'en' | 'fr' | 'it'
 
-const globs = {
-  en: import.meta.glob('/src/content/en/posts/**/*.md', { query: '?raw' }),
-  fr: import.meta.glob('/src/content/fr/posts/**/*.md', { query: '?raw' }),
-  it: import.meta.glob('/src/content/it/posts/**/*.md', { query: '?raw' }),
-};
+type PostModule = {
+  default: React.ComponentType
+  frontmatter?: Record<string, any>
+}
 
+const globs: Record<Lang, Record<string, unknown>> = {
+  en: import.meta.glob('/src/content/en/posts/**/*.{md,mdx}', { eager: true }),
+  fr: import.meta.glob('/src/content/fr/posts/**/*.{md,mdx}', { eager: true }),
+  it: import.meta.glob('/src/content/it/posts/**/*.{md,mdx}', { eager: true }),
+}
 
+function toSlug(input: string) {
+  return input
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\- ]/g, '')
+    .replace(/\s+/g, '-')
+}
 
-export async function getPostBySlug(lang: "en" | "fr" | "it", slug?: string) {
-  if (!slug) return null;
-  const entries = Object.entries(globs[lang]);
-  for (const [path, loader] of entries) {
-    void path; // non utilisé pour l’instant, pour éviter TS6133
-    const mod: any = await loader();
-    const raw: unknown = mod?.default ?? mod;
-    if (typeof raw !== 'string') continue;
-    const { data, body } = parseFrontmatter(raw);
-    const s = (data?.slug ?? '')
-      .toString()
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9\- ]/g, '')
-      .replace(/\s+/g, '-') ||
-      (data?.title ?? '').toString().toLowerCase().replace(/\s+/g, '-');
+export async function getPostBySlug(lang: Lang, slug?: string) {
+  if (!slug) return null
+  const modules = globs[lang]
 
-    if (s === slug) {
+  for (const [path, mod] of Object.entries(modules)) {
+    const m = mod as PostModule
+    if (!m?.default) continue
+
+    const data = (m as any).frontmatter || {}
+    const candidate =
+      (data?.slug && toSlug(data.slug)) ||
+      (data?.title && toSlug(data.title)) ||
+      path.split('/').pop()!.replace(/\.mdx?$/, '')
+
+    if (candidate === slug) {
       return {
         meta: data,
-        html: body, // rendu markdown simplifié (on affiche brut ici)
-      };
+        Component: m.default, // 👉 à rendre dans ta vue
+        path,
+        slug: candidate,
+      }
     }
   }
-  
-  return null;
+
+  return null
 }
