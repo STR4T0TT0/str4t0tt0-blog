@@ -7,7 +7,7 @@ tags:
   - "defi"
   - "blockchain"
 excerpt: "How decentralized finance is reshaping global financial systems."
-image: "/content/en/posts/crypto-defi/cover.webp"
+image: # volontairement pas d'image pour tester le placeholder
 draft: false
 lang: "en"
 ---

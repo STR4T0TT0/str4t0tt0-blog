@@ -3,7 +3,7 @@ title: "Why Multi-Factor Authentication Still Fails"
 date: "2025-01-20"
 slug: "mfa-still-fails"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 

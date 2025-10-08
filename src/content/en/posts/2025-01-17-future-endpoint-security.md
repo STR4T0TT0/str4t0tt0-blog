@@ -3,7 +3,7 @@ title: "The Future of Endpoint Security"
 date: "2025-01-17"
 slug: "future-endpoint-security"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 

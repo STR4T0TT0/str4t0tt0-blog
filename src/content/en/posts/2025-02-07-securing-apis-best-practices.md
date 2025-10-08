@@ -3,7 +3,7 @@ title: "Securing APIs: Best Practices for Developers"
 date: "2025-02-07"
 slug: "securing-apis-best-practices"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 

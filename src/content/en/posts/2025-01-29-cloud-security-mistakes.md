@@ -3,7 +3,7 @@ title: "Top 10 Mistakes in Cloud Security"
 date: "2025-01-29"
 slug: "cloud-security-mistakes"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 

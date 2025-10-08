@@ -3,7 +3,7 @@ title: "Understanding Supply Chain Attacks"
 date: "2025-01-23"
 slug: "supply-chain-attacks"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 

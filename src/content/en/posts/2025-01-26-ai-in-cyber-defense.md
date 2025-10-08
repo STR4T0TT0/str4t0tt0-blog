@@ -3,7 +3,7 @@ title: "AI in Cyber Defense: Promise and Perils"
 date: "2025-01-26"
 slug: "ai-in-cyber-defense"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 

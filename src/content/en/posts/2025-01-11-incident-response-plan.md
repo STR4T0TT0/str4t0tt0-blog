@@ -3,7 +3,7 @@ title: "How to Build a Cybersecurity Incident Response Plan"
 date: "2025-01-11"
 slug: "incident-response-plan"
 category: "cybersecurity"
-image: "/content/shared/placeholder.webp"
+image: # volontairement pas d'image pour tester le placeholder
 lang: "en"
 ---
 
