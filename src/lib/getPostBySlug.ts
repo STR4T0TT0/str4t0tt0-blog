@@ -35,9 +35,9 @@ export async function getPostBySlug(lang: Lang, slug?: string) {
       path.split('/').pop()!.replace(/\.mdx?$/, '')
 
     if (candidate === slug) {
-      return {
+        return {
         meta: data,
-        Component: m.default, // 👉 à rendre dans ta vue
+        Component: m.default,
         path,
         slug: candidate,
       }

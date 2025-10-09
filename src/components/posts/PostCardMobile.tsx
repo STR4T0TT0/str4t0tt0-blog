@@ -7,10 +7,10 @@ export default function PostCardMobile({ post }: { post: PostMeta }) {
   const d = new Date(post.date);
   const dateStr = isNaN(d.getTime()) ? "" : d.toLocaleDateString();
     // Sécurité si pas de chemin complet
- const href = ROUTES.post(post.lang, post.category ?? post.category, post.slug);
+ const href = ROUTES.post(post.lang, post.category, post.slug);
 
   return (
-    <article className="rounded-2xl overflow-hidden bg-white/5 ring-1 ring-white/10">
+    <article className="relative rounded-2xl overflow-hidden bg-white/5 ring-1 ring-white/10">
       {/* Image avec ratio fixe 16:9 */}
       <div className="aspect-[16/9] w-full overflow-hidden">
         <img

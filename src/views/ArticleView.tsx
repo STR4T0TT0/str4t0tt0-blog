@@ -130,15 +130,15 @@ export default function ArticleView() {
             <p className="text-sm text-white/70">Loading…</p>
           ) : (
             <>
-              <article className="prose-article prose-headings:scroll-mt-[116px]">
-                <h1 className="mb-2">{state.title}</h1>
+              <article className="prose-article prose-invert max-w-none prose-headings:scroll-mt-[116px]">
                 {state.date && (
                   <p className="text-xs text-white/50 mb-6">
                     {new Date(state.date).toLocaleDateString()}
                   </p>
                 )}
-                {/* 👉 Rendu MDX */}
-                <state.Component />
+                {/*  Rendu MDX on neutraliser les éventuels h1 du contenu.
+                ajouter components={{ h1: () => null }} dans la balise*/}
+                <state.Component  />
               </article>
 
               <hr className="my-8 border-white/10" />

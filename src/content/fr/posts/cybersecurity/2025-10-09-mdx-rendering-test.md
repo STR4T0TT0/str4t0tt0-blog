@@ -5,7 +5,7 @@ date: "2025-10-09"
 category: "cybersecurity"
 tags: ["test", "rendu", "mdx"]
 excerpt: "Page longue pour vérifier le rendu MDX en français (titres, listes, code, tableaux, images, liens)."
-image: "/content/shared/image-str4t0tt0-fallback-neutral-lg.webp"
+image: ""
 draft: false
 lang: "fr"
 ---
@@ -17,7 +17,7 @@ Si tout s’affiche correctement, ton pipeline MDX est opérationnel.
 
 ## 1) Titres, emphase & code inline
 
-- **Gras**, *italique*, et `codeInline()` doivent respecter ta charte.
+- **Gras**, _italique_, et `codeInline()` doivent respecter ta charte.
 - Les paragraphes longs testent l’interlignage, les marges et la lisibilité.
 
 ### Paragraphe d’exemple
@@ -40,3 +40,4 @@ export function rate(cvss: number): Risk {
   if (cvss >= 4) return "medium";
   return "low";
 }
+```
