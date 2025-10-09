@@ -1,0 +1,31 @@
+/* Composants maison à développer */
+/* Overrides ciblés pour casser l'effet générique */
+@layer utilities {
+  /* Liens */
+  .prose :where(a) {
+    @apply underline decoration-dotted underline-offset-4 hover:no-underline;
+    color: var(--color-str4t0tt0-primary);
+  }
+
+  /* Code inline (pas dans <pre>) */
+  .prose :where(code):not(:where(pre code)) {
+    @apply rounded px-1 py-0.5;
+    background: color-mix(in oklab, white 10%, transparent);
+  }
+
+  /* Blockquotes */
+  .prose :where(blockquote) {
+    @apply border-l-2 pl-4 text-white/80;
+    border-color: color-mix(in oklab, rgb(var(--color-str4t0tt0-primary-rgb)) 70%, transparent);
+  }
+
+  /* HR plus discret */
+  .prose :where(hr) {
+    @apply my-10 border-white/10;
+  }
+
+  /* Images plus nettes */
+  .prose :where(img) {
+    @apply rounded-xl;
+  }
+}

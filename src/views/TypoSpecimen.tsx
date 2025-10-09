@@ -32,6 +32,38 @@ export default function TypoSpecimen() {
           </p>
         </section>
       ))}
+
+      {/* --- Test les classes proses  --- */}
+      <section className="border-t border-white/10 pt-6">
+        <h2 className="text-lg font-bold text-str4t0tt0-primary">Prose / Typography</h2>
+        <article className="prose prose-invert max-w-none">
+         <h1>Heading 1</h1>
+          <p>
+            Paragraphe avec <strong>gras</strong>, <em>italique</em>, et
+           <code> inline code()</code>. La largeur devrait être confortable, les
+            interlignes harmonisés.
+          </p>
+          <h2>Heading 2</h2>
+          <p>Liste à puces: </p>
+          <ul>
+            <li>item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+          </ul>
+          <blockquote>
+            “Security is a process, not a product.” — Bruce Schneier
+          </blockquote>
+          <pre>
+            <code>{`export function hash(input: string) {
+  // demo
+  return input.split('').reverse().join('');
+}`}</code>
+          </pre>
+          <p>
+            Lien de test : <a href="https://example.com">example.com</a>
+          </p>
+        </article>
+      </section>
     </main>
   )
 }
