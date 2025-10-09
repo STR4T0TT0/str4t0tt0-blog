@@ -130,7 +130,7 @@ export default function ArticleView() {
             <p className="text-sm text-white/70">Loading…</p>
           ) : (
             <>
-              <article className="prose-article prose-invert max-w-none prose-headings:scroll-mt-[116px]">
+              <article className="prose prose-invert max-w-none prose-headings:scroll-mt-[116px]">
                 {state.date && (
                   <p className="text-xs text-white/50 mb-6">
                     {new Date(state.date).toLocaleDateString()}
