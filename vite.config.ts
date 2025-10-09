@@ -6,23 +6,19 @@ import mdx from '@mdx-js/rollup'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkGfm from 'remark-gfm'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 
 export default defineConfig({
   plugins: [
     react(), 
     tailwindcss(),
-    // MDX ne doit PAS matcher les .md mais uniquement .mdx sinon rien s'affiche
     mdx({
-      include: [/\.mdx$/],
-      remarkPlugins: [
-        remarkGfm,
-        remarkFrontmatter,
-        [remarkMdxFrontmatter, { name: 'frontmatter' }],
-      ],
+      mdExtensions: ['.md'], // assure aussi le rendu .md via MDX
+      remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMdxFrontmatter],
+      rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]],
     }),
    ],      
   resolve: { alias: { '@': '/src'  },},
-  // Forcer Vite à traiter les .md comme des assets "bruts"
-assetsInclude: ['**/*.md']
 })

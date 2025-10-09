@@ -1,11 +1,23 @@
-import { createBrowserRouter, Navigate, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { 
+  createBrowserRouter, 
+  Navigate, 
+  Outlet, 
+  useLocation, 
+  useNavigate, 
+  useParams 
+} from 'react-router-dom'
+
 import i18n, { normLang, SUPPORTED, type Lang } from '../i18n'
 import Home from '../views/home'
 import Header from '../components/nav/Header'
-import TypoSpecimen from '../views/TypoSpecimen' 
+
 // pages uniques, voir plus loin dans le code pour la modification de la route
 import AboutPage from '../views/AboutPage'
+import TypoSpecimen from '../views/TypoSpecimen' 
+
+// page dynamique pour les catégories et articles
 import CategoryView from '../views/CategoryView'
+import ArticleView from '../views/ArticleView'
 
 function LangGuardLayout() {
   const { pathname, search, hash } = useLocation()
@@ -42,13 +54,14 @@ export const router = createBrowserRouter([
     element: <LangGuardLayout />,
     children: [
       { index: true, element: <Home /> },
-      // ajouter ici les pages uniques comme pour la page about
+      // Pages uniques comme pour la page about, tests typo...
       { path: 'about', element: <AboutPage /> },
-      { path: 'specimen', element: <TypoSpecimen /> },  // page orpheline pour tests typo
-      { path: ':category', element: <CategoryView /> }, // navigation en /langue/categorie
-      // { path: 'article/:slug', element: <Article /> }, // plus tard
+      { path: 'specimen', element: <TypoSpecimen /> }, 
+      // navigation en /langue/categorie/article (slug)
+      { path: ':category', element: <CategoryView /> }, 
+      { path: ':category/:slug', element: <ArticleView /> }
     ]
   },
-  // catch-all → /en
+  // catch-all  /en
   { path: '*', element: <Navigate to="/en" replace /> }
 ])
