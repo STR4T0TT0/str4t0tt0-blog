@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@import "./styles/typography-overrides.css";
+@import "./typography-overrides.css";
 
 /* 
   Convention : --{type}-{namespace}-{role}
