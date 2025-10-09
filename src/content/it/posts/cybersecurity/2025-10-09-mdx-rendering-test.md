@@ -1,6 +1,6 @@
 ---
 title: "Prova di rendering MDX (IT)"
-slug: "prova-render-mdx"
+slug: "mdx-rendering-test"
 date: "2025-10-09"
 category: "cybersecurity"
 tags: ["test", "render", "mdx"]

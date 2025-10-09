@@ -1,6 +1,6 @@
 ---
 title: "Test de rendu MDX (FR)"
-slug: "test-rendu-mdx"
+slug: "mdx-rendering-test"
 date: "2025-10-09"
 category: "cybersecurity"
 tags: ["test", "rendu", "mdx"]
