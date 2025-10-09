@@ -7,5 +7,5 @@
   "viewIn": "Lire en {{lang}}",
   "goToCategory": "Retour à {{category}}",
   "autoRedirect": "Redirection dans {{s}} s…",
-  "readMoreInCategory": "Pour aller plus loin sur {{category}}"
+  "readMoreInCategory": "Pour aller plus loin en {{category}}"
 }
