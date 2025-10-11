@@ -150,3 +150,69 @@ html.theme-dark .nav-icon-btn {
 html.theme-paper .nav-icon-btn {
   @apply border border-black/15 bg-black/5 hover:bg-black/10 text-black/80 focus:ring-[--color-str4t0tt0-primary];
 }
+
+/* menu va aussi suivre le théme */
+html.theme-dark .drawer {
+  background: #0b0b0b;
+  color: #fff;
+  border-right: 1px solid rgb(255 255 255 / 0.1);
+}
+html.theme-paper .drawer {
+  background: #fff;
+  color: #000;
+  border-right: 1px solid rgb(0 0 0 / 0.1);
+}
+
+/* commutateur de theme est toujours au pied du menu */
+html.theme-dark .drawer-footer {
+  background: #0b0b0b;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+}
+html.theme-paper .drawer-footer {
+  background: #fff;
+  border-top: 1px solid rgb(0 0 0 / 0.1);
+}
+html.theme-dark .menu-toggle {
+  border-color: rgb(255 255 255 / 0.15);
+  color: #fff;
+}
+html.theme-dark .menu-toggle:hover {
+  background: rgb(255 255 255 / 0.08);
+}
+html.theme-paper .menu-toggle {
+  border-color: rgb(0 0 0 / 0.15);
+  color: #000;
+}
+html.theme-paper .menu-toggle:hover {
+  background: rgb(0 0 0 / 0.06);
+}
+/* Couleur par défaut des items du menu  */
+html.theme-dark .nav-link {
+  color: var(--nav-link-color, #fff);
+}
+html.theme-paper .nav-link {
+  color: var(--nav-link-color, #000);
+}
+
+/* États désactivés  */
+html.theme-dark .nav-disabled-icon {
+  color: rgb(255 255 255 / 0.7);
+}
+html.theme-paper .nav-disabled-icon {
+  color: rgb(0 0 0 / 0.55);
+}
+
+html.theme-dark .nav-disabled-label {
+  color: rgb(255 255 255 / 0.5);
+}
+html.theme-paper .nav-disabled-label {
+  color: rgb(0 0 0 / 0.5);
+}
+
+/* Variable pour ring-offset selon le fond du drawer */
+html.theme-dark .drawer {
+  --drawer-bg: #0b0b0b;
+}
+html.theme-paper .drawer {
+  --drawer-bg: #ffffff;
+}

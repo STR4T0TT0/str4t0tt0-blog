@@ -6,6 +6,6 @@
   "about": "About",
   "disabled": "Soon",
   "title": "Menu",
-  "close": "Close menu"
-
+  "close": "Close menu",
+  "switch_to": "Switch to {{mode}}"
 }

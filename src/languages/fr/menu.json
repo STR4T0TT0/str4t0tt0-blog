@@ -6,5 +6,6 @@
   "about": "À propos",
   "disabled": "Bientôt",
   "title": "Menu",
-  "close": "Fermer le menu"
+  "close": "Fermer le menu",
+  "switch_to": "Basculer en {{mode}}"
 }

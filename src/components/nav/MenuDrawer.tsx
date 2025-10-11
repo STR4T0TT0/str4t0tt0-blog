@@ -15,9 +15,13 @@ import {
   ShieldCheckIcon,
   CpuChipIcon,
   CircleStackIcon,
+  MoonIcon,
+  SunIcon,
 } from "@heroicons/react/24/solid";
 
 import { NavLink, useLocation, useParams } from "react-router-dom";
+import { useProseTheme } from "@/components/theme/useProseTheme";
+
 import { useTranslation } from "react-i18next";
 import { normLang } from "@/i18n";
 
@@ -27,8 +31,12 @@ type MenuDrawerProps = {
 };
 
 export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
+  const { theme, setTheme } = useProseTheme();
+  const next = theme === "theme-dark" ? "theme-paper" : "theme-dark";
+
   const { t } = useTranslation("menu");
   const { pathname } = useLocation();
+  const { t: tCommon } = useTranslation("common"); // pour les libellés du switch
   const { lang: rawLang } = useParams();
   const lang = useMemo(() => normLang(rawLang), [rawLang]);
 
@@ -55,10 +63,30 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
 
   const navItems = [
     { to: withLang("/"), label: t("home"), icon: HomeIcon, disabled: false },
-    { to: withLang("/cybersecurity"), label: t("cybersecurity"), icon: ShieldCheckIcon, disabled: false },
-    { to: withLang("/artificial-intelligence"), label: t("ai"), icon: CpuChipIcon, disabled: true },
-    { to: withLang("/cryptocurrency"), label: t("crypto"), icon: CircleStackIcon, disabled: true },
-    { to: withLang("/about"), label: t("about"), icon: UserIcon, disabled: false },
+    {
+      to: withLang("/cybersecurity"),
+      label: t("cybersecurity"),
+      icon: ShieldCheckIcon,
+      disabled: false,
+    },
+    {
+      to: withLang("/artificial-intelligence"),
+      label: t("ai"),
+      icon: CpuChipIcon,
+      disabled: true,
+    },
+    {
+      to: withLang("/cryptocurrency"),
+      label: t("crypto"),
+      icon: CircleStackIcon,
+      disabled: true,
+    },
+    {
+      to: withLang("/about"),
+      label: t("about"),
+      icon: UserIcon,
+      disabled: false,
+    },
   ];
 
   // Nécessaire pour que "/" soit considéré actif uniquement sur l'accueil
@@ -94,7 +122,7 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
             >
               <DialogPanel
                 id="app-menu"
-                className="w-fit px-3 bg-[#0B0B0B] border-r border-white/10 shadow-2xl"
+                className="w-fit px-3 drawer shadow-2xl"
               >
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
@@ -113,95 +141,134 @@ export default function MenuDrawer({ open, onClose }: MenuDrawerProps) {
                 {/* Navigation de items */}
                 <nav className="px-3 py-4">
                   <ul className="grid grid-cols-1 gap-3 md:gap-4 lg:gap-6">
-                    {navItems.map(({ to, label, icon: Icon, disabled }, idx) => {
-                      /**
-                       * Un item disabled ne doit pas réagir au hover ni au focus.
-                       * - baseBox : disposition en carré et centré
-                       * - enabled : on ajoute "group" pour activer group-hover
-                       * - disabled : rendu figé + pas de group (donc aucun hover)
-                       *
-                       * ATTENTION A LA CONCATENATION : chaque string doit commencer par un espace !
-                       */
-                      const baseBox =
-                        "relative flex flex-col items-center justify-center rounded-xl" +
-                        " aspect-square w-full max-w-[60px] md:max-w-[96px] lg:max-w-[140px] mx-auto" +
-                        " transition-colors focus:outline-none";
-                      const commonEnabled = "group " + baseBox;
-                      const commonDisabled = baseBox + " cursor-not-allowed opacity-60";
+                    {navItems.map(
+                      ({ to, label, icon: Icon, disabled }, idx) => {
+                        /**
+                         * Un item disabled ne doit pas réagir au hover ni au focus.
+                         * - baseBox : disposition en carré et centré
+                         * - enabled : on ajoute "group" pour activer group-hover
+                         * - disabled : rendu figé + pas de group (donc aucun hover)
+                         *
+                         * ATTENTION A LA CONCATENATION : chaque string doit commencer par un espace !
+                         */
+                        const baseBox =
+                          "relative flex flex-col items-center justify-center rounded-xl" +
+                          " aspect-square w-full max-w-[60px] md:max-w-[96px] lg:max-w-[140px] mx-auto" +
+                          " transition-colors focus:outline-none";
+                        const commonEnabled = "group " + baseBox;
+                        const commonDisabled =
+                          baseBox + " cursor-not-allowed opacity-60";
 
-                      // Enfants (icône + label)
-                      // Enabled : héritent de la couleur du parent (hover/active).
-                      const iconEnabled =
-                        "mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8 transition-colors";
-                      const labelEnabled =
-                        "mt-0.5 text-center leading-tight break-normal transition-colors" +
-                        " max-w-[12ch] md:max-w-[14ch] lg:max-w-none text-[10px] md:text-sm lg:text-base";
+                        // Enfants (icône + label)
+                        // Enabled : héritent de la couleur du parent (hover/active).
+                        const iconEnabled =
+                          "mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8 transition-colors";
+                        const labelEnabled =
+                          "mt-0.5 text-center leading-tight break-normal transition-colors" +
+                          " max-w-[12ch] md:max-w-[14ch] lg:max-w-none text-[10px] md:text-sm lg:text-base";
 
-                      // Disabled : couleur figée et atténuée, aucune réaction au hover.
-                      const iconDisabled =
-                        "mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8 text-white/70";
-                      const labelDisabled =
-                        "mt-0.5 text-center leading-tight break-normal" +
-                        " max-w-[12ch] md:max-w-[14ch] lg:max-w-none text-[10px] md:text-sm lg:text-base text-white/50";
-                      if (disabled) {
+                        // Disabled : couleur figée et atténuée, aucune réaction au hover.
+                        const iconDisabled =
+                          "mb-0.5 h-7 w-7 md:h-9 md:w-9 lg:h-8 lg:w-8 nav-disabled-icon";
+                        const labelDisabled =
+                          "mt-0.5 text-center leading-tight break-normal" +
+                          " max-w-[12ch] md:max-w-[14ch] lg:max-w-none text-[10px] md:text-sm lg:text-base nav-disabled-label";
+
+                        if (disabled) {
+                          return (
+                            <li key={`${label}-${idx}`}>
+                              <div
+                                role="button"
+                                aria-disabled="true"
+                                tabIndex={-1}
+                                className={commonDisabled}
+                              >
+                                {/* Badge "Soon- Bientôt-Presto" est visible seulement sur desktop */}
+                                <span className="hidden lg:inline absolute right-2 top-2 rounded-md border border-white/10 px-1.5 py-0.5 text-xs opacity-70">
+                                  {t("disabled")}
+                                </span>
+                                <Icon className={iconDisabled} />
+                                <span className={labelDisabled}>{label}</span>
+                              </div>
+                            </li>
+                          );
+                        }
+
                         return (
-                          <li key={`${label}-${idx}`}>
-                            <div
-                              role="button"
-                              aria-disabled="true"
-                              tabIndex={-1}
-                              className={commonDisabled}
-                            >
-                              {/* Badge "Soon- Bientôt-Presto" est visible seulement sur desktop */}
-                              <span className="hidden lg:inline absolute right-2 top-2 rounded-md border border-white/10 px-1.5 py-0.5 text-xs opacity-70">
-                                {t("disabled")}
-                              </span>
-                              <Icon className={iconDisabled} />
-                              <span className={labelDisabled}>{label}</span>
-                            </div>
-                          </li>
-                        );
-                      }
-
-                      return (
-                        <li key={`${label}-${to}`}>
-                          {(() => {
-                              const normalize = (s: string) => s.replace(/\/+$/, "");
+                          <li key={`${label}-${to}`}>
+                            {(() => {
+                              const normalize = (s: string) =>
+                                s.replace(/\/+$/, "");
                               const current = normalize(pathname);
-                              const target  = normalize(to);
-                              const isHome  = target === normalize(homeUrl);
+                              const target = normalize(to);
+                              const isHome = target === normalize(homeUrl);
 
                               // Accueil passe en actif seulement si URL exacte.
                               // Autres pages : exact OU sous-routes.
                               const active = isHome
                                 ? current === target
-                                : current === target || current.startsWith(target + "/");
+                                : current === target ||
+                                  current.startsWith(target + "/");
 
-
-                            // Logique de toggle pas d'empilement text-white + text-[...]
-                            return (
-                              <NavLink
-                                to={to}
-                                end={to === homeUrl}
-                                className={[
-                                  commonEnabled,
-                                  active
-                                    ? "text-[rgb(var(--color-str4t0tt0-primary-rgb)/1)]" // actif = rouge
-                                    : "text-white",                                      // sinon = blanc
-                                  "hover:text-[rgb(var(--color-str4t0tt0-primary-rgb)/1)]",
-                                  "focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/0.6)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0B0B]",
-                                ].join(" ")}
-                              >
-                                <Icon className={iconEnabled} />
-                                <span className={labelEnabled}>{label}</span>
-                              </NavLink>
-                            );
-                          })()}
-                        </li>
-                      );
-                    })}
+                              // Logique de toggle pas d'empilement text-white + text-[...]
+                              return (
+                                <NavLink
+                                  to={to}
+                                  end={to === homeUrl}
+                                  className={[
+                                    commonEnabled,
+                                    "nav-link", // couleur par défaut pilotée par le thème
+                                    // actif = on redéfinit la variable
+                                    active
+                                      ? "[--nav-link-color:rgb(var(--color-str4t0tt0-primary-rgb)/1)]"
+                                      : "",
+                                    // hover = on redéfinit la variable aussi
+                                    "hover:[--nav-link-color:rgb(var(--color-str4t0tt0-primary-rgb)/1)]",
+                                    "focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/0.6)]",
+                                    "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--drawer-bg)]",
+                                  ].join(" ")}
+                                >
+                                  <Icon className={iconEnabled} />
+                                  <span className={labelEnabled}>{label}</span>
+                                </NavLink>
+                              );
+                            })()}
+                          </li>
+                        );
+                      }
+                    )}
                   </ul>
                 </nav>
+                {/* --- Commutateur de thème toujours en dernier --- */}
+                <div className="sticky bottom-0 px-4 pb-4 pt-3 drawer-footer">
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={theme === "theme-paper"}
+                    onClick={() => setTheme(next)}
+                    className="w-full rounded-xl px-3 py-3 border menu-toggle
+                               focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-str4t0tt0-primary-rgb)/.7)]"
+                  >
+                    <span className="flex flex-col items-center gap-1">
+                      {/* Icône montre toujours  état courant pour une meilleure compréhension */}
+                      {theme === "theme-dark" ? (
+                        <MoonIcon className="h-6 w-6" aria-hidden="true" />
+                      ) : (
+                        <SunIcon className="h-6 w-6" aria-hidden="true" />
+                      )}
+                      <span className="text-sm font-medium">
+                        {theme === "theme-dark"
+                          ? tCommon("theme.dark")
+                          : tCommon("theme.paper")}
+                      </span>
+                      <span className="text-[11px] opacity-70">
+                        {theme === "theme-dark"
+                          ? t("switch_to", { mode: tCommon("theme.paper") })
+                          : t("switch_to", { mode: tCommon("theme.dark") })}
+                      </span>
+                    </span>
+                  </button>
+                </div>
               </DialogPanel>
             </TransitionChild>
           </div>
