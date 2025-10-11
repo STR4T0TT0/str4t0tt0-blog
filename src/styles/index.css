@@ -43,7 +43,9 @@ html.theme-dark body {
 .only-paper {
   display: none !important;
 }
-
+html.theme-dark .text-muted {
+  color: rgb(255 255 255 / 0.6);
+}
 html.theme-dark .prose {
   --tw-prose-body: rgb(230 230 230);
   --tw-prose-headings: #fff;
@@ -88,6 +90,9 @@ html.theme-paper {
 }
 html.theme-paper body {
   @apply bg-white text-black;
+}
+html.theme-paper .text-muted {
+  color: rgb(0 0 0 / 0.6);
 }
 /* En thème clair on inverse la visibilité */
 html.theme-paper .only-dark {
@@ -267,4 +272,43 @@ html.theme-dark .drawer {
 }
 html.theme-paper .drawer {
   --drawer-bg: #ffffff;
+}
+/* Category bar thémable */
+html.theme-dark .category-bar {
+  background: rgb(0 0 0 / 0.95);
+  color: #fff;
+  border-bottom: 1px solid rgb(255 255 255 / 0.06);
+}
+html.theme-paper .category-bar {
+  background: rgb(255 255 255 / 0.95);
+  color: #000;
+  border-bottom: 1px solid rgb(0 0 0 / 0.06);
+}
+
+.category-bar .category-icon {
+  color: rgb(var(--color-str4t0tt0-primary-rgb) / 1);
+}
+.category-bar .category-label {
+  letter-spacing: 0.06em;
+}
+
+/* Page catégorie Page thémable (fond + texte) */
+.page {
+  min-height: 100vh;
+}
+
+html.theme-dark .page {
+  background: #000;
+  color: #fff;
+}
+html.theme-paper .page {
+  background: #fff;
+  color: #000;
+}
+
+html.theme-dark .text-muted {
+  color: rgb(255 255 255 / 0.6);
+}
+html.theme-paper .text-muted {
+  color: rgb(0 0 0 / 0.6);
 }
