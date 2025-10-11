@@ -1,4 +1,6 @@
 import { useTranslation } from "react-i18next";
+/* wrapper pour changer les themes de prose */
+import ProsePage from "@/components/layout/ProsePage";
 
 export default function TypoSpecimen() {
   const { t } = useTranslation("common");
@@ -33,12 +35,12 @@ export default function TypoSpecimen() {
         </section>
       ))}
 
-      {/* --- Test les classes proses  --- */}
+      {/* --- Test du wrapper ProsePage (prose uniforme) --- */}
       <section className="border-t border-white/10 pt-6">
-        <h2 className="prose prose-brand max-w-none font-body dark">
+        <h2 className="text-lg font-bold text-str4t0tt0-primary">
           Prose / Typography
         </h2>
-        <article className="prose prose-invert max-w-none">
+        <ProsePage>
           <h1>Heading 1</h1>
           <p>
             Paragraphe avec <strong>gras</strong>, <em>italique</em>, et
@@ -65,7 +67,7 @@ export default function TypoSpecimen() {
           <p>
             Lien de test : <a href="https://example.com">example.com</a>
           </p>
-        </article>
+        </ProsePage>
       </section>
     </main>
   );
