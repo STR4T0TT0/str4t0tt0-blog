@@ -32,6 +32,18 @@ body {
 html.theme-dark body {
   @apply bg-black text-white;
 }
+/* ==== helpers logo (globaux) ==== */
+.brand-logo {
+  height: 1.5rem;
+  inline-size: auto;
+}
+.only-dark {
+  display: inline !important;
+}
+.only-paper {
+  display: none !important;
+}
+
 html.theme-dark .prose {
   --tw-prose-body: rgb(230 230 230);
   --tw-prose-headings: #fff;
@@ -52,9 +64,6 @@ html.theme-dark .prose :is(h1, h2, h3, h4, h5, h6) {
 html.theme-dark .prose :is(p, li, a, blockquote, figcaption, table, th, td) {
   font-family: var(--font-str4t0tt0-roboto);
 }
-html.theme-dark .brand-logo {
-  /* logo actuel (clair sur fond sombre) */
-}
 
 /* ==========================
    THEME: PAPER (fond blanc)
@@ -64,6 +73,13 @@ html.theme-paper {
 }
 html.theme-paper body {
   @apply bg-white text-black;
+}
+/* En thème clair on inverse la visibilité */
+html.theme-paper .only-dark {
+  display: none !important;
+}
+html.theme-paper .only-paper {
+  display: inline !important;
 }
 html.theme-paper .prose {
   --tw-prose-body: #111827; /* gris-900 */
@@ -110,4 +126,27 @@ html.theme-paper .prose blockquote {
   border-left: 4px solid var(--color-str4t0tt0-primary);
   padding-left: 1rem;
   font-style: italic;
+}
+/* Header thémable avec boutons et icônes */
+html.theme-dark header {
+  background: #000;
+  color: #fff;
+  border-color: rgb(255 255 255 / 0.1);
+}
+html.theme-paper header {
+  background: #fff;
+  color: #000;
+  border-color: rgb(0 0 0 / 0.1);
+}
+
+.nav-icon-btn {
+  @apply inline-flex items-center justify-center h-11 w-11 md:h-12 md:w-12 rounded-xl focus:outline-none focus:ring-2;
+}
+
+html.theme-dark .nav-icon-btn {
+  @apply border border-white/15 bg-white/5 hover:bg-white/10 text-white/90 focus:ring-[--color-str4t0tt0-primary];
+}
+
+html.theme-paper .nav-icon-btn {
+  @apply border border-black/15 bg-black/5 hover:bg-black/10 text-black/80 focus:ring-[--color-str4t0tt0-primary];
 }
