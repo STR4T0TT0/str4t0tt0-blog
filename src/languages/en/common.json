@@ -2,5 +2,9 @@
   "language": "English",
   "languages": { "en": "English", "fr": "Français", "it": "Italiano" },
   "info": "Information",
-  "read_more": "Read more"
+  "read_more": "Read more",
+  "theme": {
+    "dark": "Dark",
+    "paper": "Light"
+  }
 }
