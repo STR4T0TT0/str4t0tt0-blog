@@ -13,8 +13,8 @@
 
 @theme {
   --font-str4t0tt0-orbitron: "orbitron", system-ui, sans-serif;
-  --font-str4t0tt0-roboto: "roboto", system-ui, sans-serif;
-  --font-str4t0tt0-prag: "pragmatica", "roboto", system-ui, sans-serif;
+  --font-str4t0tt0-ibm: "ibm-plex-mono", system-ui, sans-serif;
+  --font-str4t0tt0-source: "source-sans-3-variable", system-ui, monospace;
   --color-str4t0tt0-primary: #b22222; /* aka firebrick dans certains navigateurs */
   --color-str4t0tt0-primary-rgb: 178 34 34;
 }
@@ -79,7 +79,7 @@ html.theme-dark .prose :is(h1, h2, h3, h4, h5, h6) {
 }
 
 html.theme-dark .prose :is(p, li, a, blockquote, figcaption, table, th, td) {
-  font-family: var(--font-str4t0tt0-roboto);
+  font-family: var(--font-str4t0tt0-source);
 }
 
 /* ==========================
@@ -135,7 +135,7 @@ html.theme-paper .prose :is(h1, h2, h3, h4, h5, h6) {
 }
 
 html.theme-paper .prose :is(p, li, a, blockquote, figcaption, table, th, td) {
-  font-family: var(--font-str4t0tt0-roboto);
+  font-family: var(--font-str4t0tt0-source);
 }
 html.theme-paper .prose blockquote {
   color: #111;
