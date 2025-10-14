@@ -7,8 +7,8 @@ export default function TypoSpecimen() {
 
   const samples = [
     { cls: "font-str4t0tt0-orbitron", label: "Orbitron" },
-    { cls: "font-str4t0tt0-roboto", label: "Roboto" },
-    { cls: "font-str4t0tt0-prag", label: "Pragmatica" },
+    { cls: "font-str4t0tt0-source", label: "Source Sans 3 Variable" },
+    { cls: "font-str4t0tt0-ibm", label: "IBM Plex Mono accents" },
   ];
 
   return (

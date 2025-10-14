@@ -1,16 +1,23 @@
+// présentes les articles appartenant à une catégorie
 import { useParams } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
-import CategoryBar from "@/components/nav/CategoryBar";
-import PostCardMobile from "@/components/posts/PostCardMobile";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
-import type { PostMeta } from "@/types/post";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
+import { useTranslation } from "react-i18next";
+import type { PostMeta } from "@/types/post";
+
 import Container from "@/components/layout/Container";
+import PostCardMobile from "@/components/posts/PostCardMobile";
+import CategoryPill from "@/components/nav/CategoryPill";
+
+import CategoryBar from "@/components/nav/CategoryBar";
 
 const PAGE_SIZE = 6;
 
+// les catégories doivent être définies explicitement
 export default function CategoryView() {
   const { lang, category } = useParams();
+  const { t } = useTranslation(["blog", "menu"]);
   const seoToInternal = {
     cybersecurity: "cybersecurity",
     "artificial-intelligence": "ai",
@@ -18,6 +25,9 @@ export default function CategoryView() {
   } as const;
   const catInternal =
     category && seoToInternal[category as keyof typeof seoToInternal];
+  const catLabel =
+    (catInternal && t(`menu:${catInternal}`, { defaultValue: catInternal })) ||
+    "";
 
   const [allPosts, setAllPosts] = useState<PostMeta[]>([]);
   const [visible, setVisible] = useState<number>(PAGE_SIZE);
@@ -52,7 +62,23 @@ export default function CategoryView() {
 
   return (
     <div className="page">
-      <CategoryBar slug={catInternal as any} />
+      {/* Juste la pill catégorie */}
+      <nav
+        className="meta-bar sticky z-30"
+        style={{ top: "var(--header-h)", background: "var(--header-bg)" }}
+      >
+        <div className="h-12 ">
+          <Container className="h-full flex items-center justify-between gap-3">
+            <CategoryPill
+              lang={(lang as string) || "en"}
+              category={catInternal as any}
+              label={catLabel}
+            />
+          </Container>
+        </div>
+      </nav>
+      {/* petit espace pour mieux poser le contenu */}
+      <div className="h-2"></div>
       <main className="pt-[44px] pb-20">
         <Container>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

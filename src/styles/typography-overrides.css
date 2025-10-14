@@ -16,7 +16,11 @@
   /* Blockquotes */
   .prose :where(blockquote) {
     @apply border-l-2 pl-4 text-white/80;
-    border-color: color-mix(in oklab, rgb(var(--color-str4t0tt0-primary-rgb)) 70%, transparent);
+    border-color: color-mix(
+      in oklab,
+      rgb(var(--color-str4t0tt0-primary-rgb)) 70%,
+      transparent
+    );
   }
 
   /* HR plus discret */
@@ -27,5 +31,89 @@
   /* Images plus nettes */
   .prose :where(img) {
     @apply rounded-xl;
+  }
+  /* ================================
+     LISTE A PUCES — diamant plein
+     Contrainte lisible même petit et 
+     doivent s'adapter au thème.
+     ================================ */
+
+  /* THEME: PAPER (fond blanc)) */
+  .theme-paper .prose {
+    /* base */
+    --str-bullet-box: 1.4em; /* colonne puce */
+    --str-bullet-size: 0.65em; /* taille du carré */
+    --str-bullet-gap: 0.5rem; /* espace puce/texte */
+
+    /* brand + mélange subtil */
+    --brand: rgb(var(--color-str4t0tt0-primary-rgb, 178 34 34));
+    --str-bullet-color: color-mix(
+      in srgb,
+      var(--brand) 20%,
+      #374151
+    ); /* gray-700 teinté brand */
+    --str-bullet-hover: var(--brand);
+  }
+
+  /* THEME: DARK (par défaut) */
+  .theme-dark .prose {
+    --str-bullet-box: 1.4em;
+    --str-bullet-size: 0.65em;
+    --str-bullet-gap: 0.5rem;
+
+    --brand: rgb(var(--color-str4t0tt0-primary-rgb, 178 34 34));
+    --str-bullet-color: color-mix(
+      in srgb,
+      var(--brand) 35%,
+      #e5e7eb
+    ); /* gray-200 teinté brand */
+    --str-bullet-hover: var(--brand);
+  }
+
+  /* Réinitialise pour retrait propre */
+  .prose :where(ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .prose :where(ul > li) {
+    display: grid;
+    grid-template-columns: var(--str-bullet-box) 1fr;
+    column-gap: var(--str-bullet-gap);
+    align-items: start;
+    margin: 0.45rem 0;
+  }
+  .prose :where(ul > li)::marker {
+    content: "";
+  }
+
+  /* Je pivote un carré pour faire un diamant */
+  .prose :where(ul > li)::before {
+    content: "";
+    justify-self: center;
+    margin-top: 0.5em;
+    inline-size: var(--str-bullet-size);
+    block-size: var(--str-bullet-size);
+    background: var(--str-bullet-color);
+    transform: rotate(45deg) translateZ(0);
+    border-radius: 1px;
+    transition: background-color 0.15s ease, transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .prose :where(ul > li:hover)::before,
+  .prose :where(ul > li:focus-within)::before {
+    background: var(--str-bullet-hover);
+    transform: rotate(45deg) translateX(2px);
+    box-shadow: 0 0 2px var(--str-bullet-hover), 0 0 6px var(--str-bullet-hover);
+  }
+
+  /* TODO : éléments enfants en listes avec des diamants plus petits */
+  .prose :where(li > ul) {
+    margin-top: 0.25rem;
+  }
+  .prose :where(li > ul > li)::before {
+    inline-size: calc(var(--str-bullet-size) * 0.8);
+    block-size: calc(var(--str-bullet-size) * 0.8);
+    opacity: 0.95;
   }
 }

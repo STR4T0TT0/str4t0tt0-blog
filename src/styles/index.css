@@ -13,14 +13,17 @@
 
 @theme {
   --font-str4t0tt0-orbitron: "orbitron", system-ui, sans-serif;
-  --font-str4t0tt0-roboto: "roboto", system-ui, sans-serif;
-  --font-str4t0tt0-prag: "pragmatica", "roboto", system-ui, sans-serif;
+  --font-str4t0tt0-ibm: "ibm-plex-mono", system-ui, sans-serif;
+  --font-str4t0tt0-source: "source-sans-3-variable", system-ui, monospace;
   --color-str4t0tt0-primary: #b22222; /* aka firebrick dans certains navigateurs */
   --color-str4t0tt0-primary-rgb: 178 34 34;
 }
 
 /* base dark minimal */
 :root {
+  --header-h: 56px;
+  --header-bg: #000000;
+  --header-border: rgb(255 255 255 / 0.1);
   color-scheme: dark;
 }
 body {
@@ -31,6 +34,8 @@ body {
    ========================= */
 html.theme-dark body {
   @apply bg-black text-white;
+  --header-bg: #000000;
+  --header-border: rgb(255 255 255 / 0.1);
 }
 /* ==== helpers logo (globaux) ==== */
 .brand-logo {
@@ -59,14 +64,14 @@ html.theme-dark .prose {
   --tw-prose-code-bg: rgb(255 255 255 / 0.06);
   --tw-prose-pre-bg: rgb(255 255 255 / 0.04);
 }
-html.theme-dark .prose .h1 {
+html.theme-dark .prose h1 {
   font-family: var(--font-str4t0tt0-orbitron);
   font-size: 2rem;
   line-height: 2.5rem;
   letter-spacing: -0.01em;
 }
 
-html.theme-dark .prose .h2 {
+html.theme-dark .prose h2 {
   font-family: var(--font-str4t0tt0-orbitron);
   font-size: 1.4rem;
   margin-top: 1.5rem;
@@ -79,7 +84,7 @@ html.theme-dark .prose :is(h1, h2, h3, h4, h5, h6) {
 }
 
 html.theme-dark .prose :is(p, li, a, blockquote, figcaption, table, th, td) {
-  font-family: var(--font-str4t0tt0-roboto);
+  font-family: var(--font-str4t0tt0-source);
 }
 
 /* ==========================
@@ -87,6 +92,8 @@ html.theme-dark .prose :is(p, li, a, blockquote, figcaption, table, th, td) {
    ========================== */
 html.theme-paper {
   color-scheme: light;
+  --header-bg: #ffffff;
+  --header-border: rgb(0 0 0 / 0.1);
 }
 html.theme-paper body {
   @apply bg-white text-black;
@@ -115,14 +122,14 @@ html.theme-paper .prose {
   --tw-prose-pre-bg: rgb(0 0 0 / 0.04);
 }
 
-html.theme-paper .prose .h1 {
+html.theme-paper .prose h1 {
   font-family: var(--font-str4t0tt0-orbitron);
   font-size: 2rem;
   line-height: 2.5rem;
   letter-spacing: -0.01em;
 }
 
-html.theme-paper .prose .h2 {
+html.theme-paper .prose h2 {
   font-family: var(--font-str4t0tt0-orbitron);
   font-size: 1.4rem;
   margin-top: 1.5rem;
@@ -135,7 +142,7 @@ html.theme-paper .prose :is(h1, h2, h3, h4, h5, h6) {
 }
 
 html.theme-paper .prose :is(p, li, a, blockquote, figcaption, table, th, td) {
-  font-family: var(--font-str4t0tt0-roboto);
+  font-family: var(--font-str4t0tt0-source);
 }
 html.theme-paper .prose blockquote {
   color: #111;
@@ -160,7 +167,7 @@ html.theme-paper .prose blockquote {
 }
 
 .prose :not(pre) > code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-str4t0tt0-ibm);
   padding: 0.15rem 0.35rem;
   border-radius: 0.4rem;
   background: var(--tw-prose-code-bg);
@@ -176,24 +183,28 @@ html.theme-paper .prose blockquote {
   padding: 1rem 1.25rem;
   overflow-x: auto;
   border: 1px solid rgb(0 0 0 / 0.06);
-  background: #f6f6f6;
-  color: #111;
+  background: var(--tw-prose-pre-bg);
+  color: var(--tw-prose-code);
 }
 .prose blockquote {
   border-left: 4px solid var(--color-str4t0tt0-primary);
   padding-left: 1rem;
   font-style: italic;
 }
-/* Header thémable avec boutons et icônes */
+/* Header thémable avec boutons et icônes
+   je garde le border bottom pour aider à la 
+   conception du design*/
 html.theme-dark header {
-  background: #000;
+  background: var(--header-bg);
   color: #fff;
-  border-color: rgb(255 255 255 / 0.1);
+  border-color: var(--header-border);
+  border-bottom: 0;
 }
 html.theme-paper header {
-  background: #fff;
+  background: var(--header-bg);
   color: #000;
-  border-color: rgb(0 0 0 / 0.1);
+  border-color: var(--header-border);
+  border-bottom: 0;
 }
 
 .nav-icon-btn {
@@ -273,26 +284,38 @@ html.theme-dark .drawer {
 html.theme-paper .drawer {
   --drawer-bg: #ffffff;
 }
-/* Category bar thémable */
-html.theme-dark .category-bar {
-  background: rgb(0 0 0 / 0.95);
-  color: #fff;
-  border-bottom: 1px solid rgb(255 255 255 / 0.06);
-}
-html.theme-paper .category-bar {
-  background: rgb(255 255 255 / 0.95);
-  color: #000;
-  border-bottom: 1px solid rgb(0 0 0 / 0.06);
+/* Sticky sous le header avec fond & bordure homogènes 
+   le séparateur unique du header est géré ici*/
+.meta-bar {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  color: inherit;
 }
 
-.category-bar .category-icon {
+.meta-bar .category-icon {
   color: rgb(var(--color-str4t0tt0-primary-rgb) / 1);
 }
-.category-bar .category-label {
+.meta-bar .category-label {
   letter-spacing: 0.06em;
 }
 
-/* Page catégorie Page thémable (fond + texte) */
+/* Design de navigation lisible sur les deux thèmes */
+.category-pill {
+  background: var(--header-bg);
+  border: 1px solid var(--header-border);
+  color: inherit;
+}
+.category-pill:hover {
+  background: rgb(0 0 0 / 0.05);
+}
+html.theme-dark .category-pill:hover {
+  background: rgb(255 255 255 / 0.05);
+}
+.category-pill .category-icon {
+  color: rgb(var(--color-str4t0tt0-primary-rgb) / 1);
+}
+
+/* Page catégorie Page thémable (fond  texte) */
 .page {
   min-height: 100vh;
 }
