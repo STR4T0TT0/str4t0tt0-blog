@@ -64,11 +64,14 @@ export default function CategoryView() {
     <div className="page">
       {/* Juste la pill catégorie */}
       <nav
-        className="sticky top-[56px] z-30 backdrop-blur supports-[backdrop-filter]:bg-background/60"
-        aria-label="Category context"
+        className="meta-bar sticky z-30"
+        style={{ top: "var(--header-h)", background: "var(--header-bg)" }}
       >
-        <div className="h-11">
-          <Container className="h-full flex items-center">
+        <div
+          className="h-12 border-b"
+          style={{ borderColor: "var(--header-border)" }}
+        >
+          <Container className="h-full flex items-center justify-between gap-3">
             <CategoryPill
               lang={(lang as string) || "en"}
               category={catInternal as any}
@@ -77,6 +80,8 @@ export default function CategoryView() {
           </Container>
         </div>
       </nav>
+      {/* petit espace pour mieux poser le contenu */}
+      <div className="h-2"></div>
       <main className="pt-[44px] pb-20">
         <Container>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -103,12 +103,17 @@ export default function ArticleView() {
 
   return (
     <div className="page">
-      {/* Meta-bar sticky : pill catégorie + date */}
+      {/* Meta-bar sticky : pill catégorie avec date à droite */}
       <nav
-        className="sticky top-[56px] z-30 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+        className="sticky z-30"
+        style={{ top: "var(--header-h)", background: "var(--header-bg)" }}
         aria-label="Article context"
       >
-        <div className="h-11">
+        {" "}
+        <div
+          className="h-11 border-b"
+          style={{ borderColor: "var(--header-border)" }}
+        >
           <Container className="h-full flex items-center justify-between gap-3">
             <CategoryPill
               lang={lang}

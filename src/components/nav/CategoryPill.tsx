@@ -31,17 +31,21 @@ export default function CategoryPill({
     <Link
       to={href}
       className="
-        inline-flex items-center gap-2 rounded-full
-        px-3 py-1.5 text-[13px] font-semibold tracking-wide border
-        transition-colors hover:opacity-90
-        focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-        focus-visible:ring-[--color-accent] focus-visible:ring-offset-background
-        border-neutral-300 bg-white text-neutral-900
-        dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100
-      "
+    inline-flex items-center gap-2 rounded-full
+    px-3 py-1.5 text-[13px] font-semibold tracking-wide
+    border transition-colors
+    hover:bg-black/5 html:theme-dark:hover:bg-white/5
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-str4t0tt0-primary)]
+    focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--header-bg)]
+    border-[color:var(--header-border)] 
+    bg-[var(--header-bg)] text-[color:inherit]
+  "
       aria-label={`${label} — open category`}
     >
-      <Icon className="w-4 h-4" aria-hidden />
+      <Icon
+        className="w-4 h-4 text-[var(--color-str4t0tt0-primary)]"
+        aria-hidden
+      />
       <span className="uppercase">{label}</span>
     </Link>
   );

@@ -21,6 +21,9 @@
 
 /* base dark minimal */
 :root {
+  --header-h: 56px;
+  --header-bg: #000000;
+  --header-border: rgb(255 255 255 / 0.1);
   color-scheme: dark;
 }
 body {
@@ -31,6 +34,8 @@ body {
    ========================= */
 html.theme-dark body {
   @apply bg-black text-white;
+  --header-bg: #000000;
+  --header-border: rgb(255 255 255 / 0.1);
 }
 /* ==== helpers logo (globaux) ==== */
 .brand-logo {
@@ -87,6 +92,8 @@ html.theme-dark .prose :is(p, li, a, blockquote, figcaption, table, th, td) {
    ========================== */
 html.theme-paper {
   color-scheme: light;
+  --header-bg: #ffffff;
+  --header-border: rgb(0 0 0 / 0.1);
 }
 html.theme-paper body {
   @apply bg-white text-black;
@@ -184,16 +191,20 @@ html.theme-paper .prose blockquote {
   padding-left: 1rem;
   font-style: italic;
 }
-/* Header thémable avec boutons et icônes */
+/* Header thémable avec boutons et icônes
+   je garde le border bottom pour aider à la 
+   conception du design*/
 html.theme-dark header {
-  background: #000;
+  background: var(--header-bg);
   color: #fff;
-  border-color: rgb(255 255 255 / 0.1);
+  border-color: var(--header-border);
+  border-bottom: 0;
 }
 html.theme-paper header {
-  background: #fff;
+  background: var(--header-bg);
   color: #000;
-  border-color: rgb(0 0 0 / 0.1);
+  border-color: var(--header-border);
+  border-bottom: 0;
 }
 
 .nav-icon-btn {
@@ -273,26 +284,38 @@ html.theme-dark .drawer {
 html.theme-paper .drawer {
   --drawer-bg: #ffffff;
 }
-/* Category bar thémable */
-html.theme-dark .category-bar {
-  background: rgb(0 0 0 / 0.95);
-  color: #fff;
-  border-bottom: 1px solid rgb(255 255 255 / 0.06);
-}
-html.theme-paper .category-bar {
-  background: rgb(255 255 255 / 0.95);
-  color: #000;
-  border-bottom: 1px solid rgb(0 0 0 / 0.06);
+/* Sticky sous le header avec fond & bordure homogènes 
+   le séparateur unique du header est géré ici*/
+.meta-bar {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  color: inherit;
 }
 
-.category-bar .category-icon {
+.meta-bar .category-icon {
   color: rgb(var(--color-str4t0tt0-primary-rgb) / 1);
 }
-.category-bar .category-label {
+.meta-bar .category-label {
   letter-spacing: 0.06em;
 }
 
-/* Page catégorie Page thémable (fond + texte) */
+/* Design de navigation lisible sur les deux thèmes */
+.category-pill {
+  background: var(--header-bg);
+  border: 1px solid var(--header-border);
+  color: inherit;
+}
+.category-pill:hover {
+  background: rgb(0 0 0 / 0.05);
+}
+html.theme-dark .category-pill:hover {
+  background: rgb(255 255 255 / 0.05);
+}
+.category-pill .category-icon {
+  color: rgb(var(--color-str4t0tt0-primary-rgb) / 1);
+}
+
+/* Page catégorie Page thémable (fond  texte) */
 .page {
   min-height: 100vh;
 }
