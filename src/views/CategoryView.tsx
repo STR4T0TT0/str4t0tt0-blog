@@ -10,8 +10,6 @@ import Container from "@/components/layout/Container";
 import PostCardMobile from "@/components/posts/PostCardMobile";
 import CategoryPill from "@/components/nav/CategoryPill";
 
-import CategoryBar from "@/components/nav/CategoryBar";
-
 const PAGE_SIZE = 6;
 
 // les catégories doivent être définies explicitement
