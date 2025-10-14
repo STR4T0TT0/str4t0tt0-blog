@@ -1,14 +1,16 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import CategoryBar from "@/components/nav/CategoryBar";
-import Container from "@/components/layout/Container";
-import { getPostBySlug } from "@/lib/getPostBySlug";
-import { getPostsByCategory } from "@/lib/getPostsByCategory";
-import PostCardMobile from "@/components/posts/PostCardMobile";
 import { useTranslation } from "react-i18next";
 import { SUPPORTED, type Lang } from "@/i18n";
-import type { PostMeta } from "@/types/post";
 import type { ComponentType } from "react";
+import type { PostMeta } from "@/types/post";
+
+import { getPostBySlug } from "@/lib/getPostBySlug";
+import { getPostsByCategory } from "@/lib/getPostsByCategory";
+
+import Container from "@/components/layout/Container";
+import PostCardMobile from "@/components/posts/PostCardMobile";
+import CategoryPill from "@/components/nav/CategoryPill";
 
 const internalFromSeo = {
   cybersecurity: "cybersecurity",
@@ -101,20 +103,28 @@ export default function ArticleView() {
 
   return (
     <div className="page">
-      <CategoryBar slug={catInternal as any} />
+      {/* Meta-bar sticky : pill catégorie + date */}
+      <nav
+        className="sticky top-[56px] z-30 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+        aria-label="Article context"
+      >
+        <div className="h-11">
+          <Container className="h-full flex items-center justify-between gap-3">
+            <CategoryPill
+              lang={lang}
+              category={catInternal as any}
+              label={catLabel}
+            />
+            {state?.date && (
+              <time className="text-xs text-muted" dateTime={state.date}>
+                {new Date(state.date).toLocaleDateString()}
+              </time>
+            )}
+          </Container>
+        </div>
+      </nav>
       <main className="pt-[44px] pb-20">
         <Container>
-          {/* lien retour au-dessus */}
-          <div className="mb-4">
-            <Link
-              to={backTo}
-              className="inline-flex items-center gap-2 text-sm text-muted hover:underline"
-            >
-              <span aria-hidden>←</span>
-              <span>{t("blog:backToCategory", { category: catLabel })}</span>
-            </Link>
-          </div>
-
           {notFound ? (
             <div className="space-y-4">
               <p className="text-sm">
@@ -161,11 +171,6 @@ export default function ArticleView() {
           ) : (
             <>
               <article className="prose max-w-none prose-headings:scroll-mt-[116px]">
-                {state.date && (
-                  <p className="text-xs text-muted mb-6">
-                    {new Date(state.date).toLocaleDateString()}
-                  </p>
-                )}
                 {/*  Rendu MDX on neutraliser les éventuels h1 du contenu.
                 ajouter components={{ h1: () => null }} dans la balise*/}
                 <state.Component />
