@@ -67,10 +67,7 @@ export default function CategoryView() {
         className="meta-bar sticky z-30"
         style={{ top: "var(--header-h)", background: "var(--header-bg)" }}
       >
-        <div
-          className="h-12 border-b"
-          style={{ borderColor: "var(--header-border)" }}
-        >
+        <div className="h-12 ">
           <Container className="h-full flex items-center justify-between gap-3">
             <CategoryPill
               lang={(lang as string) || "en"}

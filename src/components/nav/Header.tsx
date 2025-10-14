@@ -12,9 +12,18 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b">
-      <div className="h-14">
-        <Container className="h-full flex items-center justify-between">
+    <header
+      className="
+         sticky top-0 z-50
+         bg-white/80 dark:bg-zinc-900/70
+         supports-[backdrop-filter]:backdrop-blur-md
+
+
+         
+       "
+    >
+      <div className="min-h-16 py-2.5">
+        <Container className="h-full flex items-center justify-between gap-3">
           {/* Toujours à gauche burger suivi du logo */}
           <div className="flex items-center gap-3">
             <button
@@ -24,7 +33,7 @@ export default function Header() {
               aria-controls="app-menu"
               className="nav-icon-btn"
             >
-              <Bars3Icon className="h-6 w-6 md:h-7 md:w-7 lg:h-8 lg:w-8" />
+              <Bars3Icon className="h-5 w-5 md:h-7 md:w-7 lg:h-8 lg:w-8" />
             </button>
 
             {/* Logo change selon le thème */}
@@ -32,14 +41,14 @@ export default function Header() {
               <img
                 src={LogoDark}
                 alt="STR4T0TT0"
-                className="brand-logo only-dark h-7 md:h-8 w-auto "
+                className="brand-logo only-dark h-6 md:h-8 w-auto "
                 loading="eager"
                 decoding="async"
               />
               <img
                 src={LogoLight}
                 alt="STR4T0TT0"
-                className="brand-logo only-paper h-7 md:h-8 w-auto "
+                className="brand-logo only-paper h-6 md:h-8 w-auto "
                 loading="eager"
                 decoding="async"
               />

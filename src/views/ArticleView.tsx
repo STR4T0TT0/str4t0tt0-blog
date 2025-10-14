@@ -110,10 +110,7 @@ export default function ArticleView() {
         aria-label="Article context"
       >
         {" "}
-        <div
-          className="h-11 border-b"
-          style={{ borderColor: "var(--header-border)" }}
-        >
+        <div className="h-11">
           <Container className="h-full flex items-center justify-between gap-3">
             <CategoryPill
               lang={lang}
