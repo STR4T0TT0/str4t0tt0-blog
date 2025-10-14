@@ -46,10 +46,10 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Toujours à droite pour changer de langue */}
+          {/* Contrôles toujours à droite : Langue suivi du sélecteur de thème tout à droite */}
           <div className="flex items-center gap-3">
-            <ProseThemeSwitch />
             <LanguageSwitch />
+            <ProseThemeSwitch />
           </div>
         </Container>
       </div>

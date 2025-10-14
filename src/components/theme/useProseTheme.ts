@@ -16,5 +16,9 @@ export function useProseTheme() {
     localStorage.setItem(KEY, theme);
   }, [theme]);
 
-  return { theme, setTheme };
+  // évite de réécrire la logique partout
+  const toggle = () =>
+    setTheme((t) => (t === "theme-dark" ? "theme-paper" : "theme-dark"));
+
+  return { theme, setTheme, toggle } as const;
 }
